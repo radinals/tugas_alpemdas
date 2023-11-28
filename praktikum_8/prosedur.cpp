@@ -1,6 +1,10 @@
 #include <iostream>
 #include <limits>
+
 using namespace std;
+
+// gunakan "cls" jika di windows
+#define clear_console system("clear");
 
 void
 clear_buffer()
@@ -10,15 +14,29 @@ clear_buffer()
 }
 
 void
+get_input(int& var)
+{
+	cin >> var;
+	clear_buffer();
+}
+
+void
+get_input(float& var)
+{
+	cin >> var;
+	clear_buffer();
+}
+
+void
 luas_persegi()
 {
 	float panjang_sisi;
 
-	cout << "Masukan Panjang Sisi: ";
-	cin >> panjang_sisi;
-	clear_buffer();
+	cout << "-> Masukan Panjang Sisi: ";
+	get_input(panjang_sisi);
 
-	cout << "Luas Persegi: " << panjang_sisi*panjang_sisi << endl;
+
+	cout << "Luas Persegi adalah, " << panjang_sisi*panjang_sisi << " cm" << endl;
 }
 
 void
@@ -26,17 +44,13 @@ luas_segitiga()
 {
 	float ukuran_alas, tinggi;
 
-	cout << "Masukan Ukuran Alas: ";
-	cin >> ukuran_alas;
+	cout << "-> Masukan Ukuran Alas: ";
+	get_input(ukuran_alas);
 
-	clear_buffer();
+	cout << "-> Masukan Tinggi: ";
+	get_input(tinggi);
 
-	cout << "Masukan Tinggi: ";
-	cin >> tinggi;
-
-	clear_buffer();
-
-	cout << "Luas Segitiga: " << (0.5f * ukuran_alas * tinggi) << endl;
+	cout << "Luas Segitiga adalah, " << (0.5f * ukuran_alas * tinggi) << " cm" << endl;
 }
 
 void
@@ -44,14 +58,12 @@ luas_lingkaran()
 {
 	float panjang_diameter, jari_jari;
 
-	cout << "Masukan Panjang Diameter: ";
-	cin >> panjang_diameter;
-
-	clear_buffer();
+	cout << "-> Masukan Panjang Diameter: ";
+	get_input(panjang_diameter);
 
 	jari_jari = 0.5f * panjang_diameter;
 
-	cout << "Luas Lingkaran: " << ((22.0f/7.0f) * jari_jari * jari_jari) << endl;
+	cout << "Luas Lingkaran adalah, " << ((22.0f/7.0f) * jari_jari * jari_jari) << " cm" << endl;
 }
 
 int
@@ -59,6 +71,8 @@ main()
 {
 	while (true)
 	{
+		clear_console
+
 		int opsi;
 
 		cout << endl;
@@ -69,7 +83,7 @@ main()
 
 		cout << endl;
 		cout << "Pilihan: ";
-		cin >> opsi;
+		get_input(opsi);
 
 		switch (opsi)
 		{
@@ -89,10 +103,12 @@ main()
 				return 0;
 
 			default:
-				clear_buffer();
 				cout << "Input Invalid!" << endl;;
+				cin.get();
 				continue;
 		}
+
+		cin.get();
 	}
 
 	return 0;
