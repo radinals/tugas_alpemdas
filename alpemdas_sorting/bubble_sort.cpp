@@ -9,16 +9,16 @@ void print_array(int array[], size_t array_size);
 int
 main()
 {
-	size_t data_count = 15;
-	int data[15] = { 5, 4, 3, 2, 1 , -1, 34, 12, 9, 3, 30, -12, -22, 7, 8};
+	size_t arr_size = 15;
+	int arr[15] = { 5, 4, 3, 2, 1, -1, 34, 12, 9, 3, 30, -12, -22, 7, 8};
 
 	cout << "BEFORE: ";
-	print_array(data, data_count);
+	print_array(arr, arr_size);
 
-	bubble_sort(data, data_count);
+	bubble_sort(arr, arr_size);
 
 	cout << "AFTER:  ";
-	print_array(data, data_count);
+	print_array(arr, arr_size);
 }
 
 void

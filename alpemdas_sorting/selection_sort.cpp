@@ -7,23 +7,23 @@ using namespace std;
 void swap_array_item(size_t from, size_t to, int array[]);
 void find_max(int array[], size_t start_i, size_t array_size, size_t* max_index);
 void find_min(int array[], size_t start_i, size_t array_size, size_t* min_index);
-void print_array(int array[], size_t array_size, size_t offset);
+void print_array(int array[], size_t array_size);
 void selection_sort(int array[], size_t array_size);
 
 
 int
 main()
 {
-	size_t data_count = 15;
-	int data[15] = { 5, 4, 3, 2, 1, -1, 34, 12, 9, 3, 30, -12, -22, 7, 8};
+	size_t arr_size = 15;
+	int arr[15] = { 5, 4, 3, 2, 1, -1, 34, 12, 9, 3, 30, -12, -22, 7, 8};
 
 	cout << "BEFORE: ";
-	print_array(data, data_count, 0);
+	print_array(arr, arr_size);
 
-	selection_sort(data, data_count);
+	selection_sort(arr, arr_size);
 
 	cout << "AFTER:  ";
-	print_array(data, data_count, 0);
+	print_array(arr, arr_size);
 }
 
 void
@@ -85,9 +85,9 @@ find_min(int array[], size_t array_size, size_t start_i, size_t* min_index)
 }
 
 void
-print_array(int array[], size_t array_size, size_t offset)
+print_array(int array[], size_t array_size)
 {
-	for (size_t i=0+offset; i < array_size; i++) {
+	for (size_t i=0; i < array_size; i++) {
 		cout << array[i] << ", ";
 	}
 	cout << endl;
