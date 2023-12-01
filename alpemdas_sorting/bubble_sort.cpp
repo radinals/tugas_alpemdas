@@ -24,12 +24,15 @@ main()
 void
 bubble_sort(int array[], size_t array_size)
 {
+	// shift the biggest number increasingly to the right
 	for(size_t n = 0; n < array_size; n++) {
-		for(size_t i=0; i < array_size-n; i++) {
-			if (array[i] > array[i+1]) {
+		// element at array_size-n is always the biggest,
+		// array_size- n - 1 to optimize
+		for(size_t i=0; i < array_size-n-1; i++) {
+			// the current one is bigger than the one in the right
+			// swap the current to the right
+			if (array[i] > array[i+1])
 				swap_array_item(i, i+1, array);
-				continue;
-			}
 		}
 	}
 }
