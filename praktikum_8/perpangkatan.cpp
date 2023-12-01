@@ -10,7 +10,9 @@ perpangkatan(double n, int pangkat)
 	bool pangkat_negatif = false;
 
 	if (pangkat == 0) {
-		return 0;
+		return 1;
+	} else if (pangkat == 1) {
+		return n;
 	} else if (pangkat < 0) {
 
 		// rumus pangkat negatif
