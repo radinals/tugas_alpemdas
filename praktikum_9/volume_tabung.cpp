@@ -58,15 +58,15 @@ main()
 		cout << "2. Volume Tabung\n";
 
 		cout << "pilihan <1-2>:";
-		if(get_input(opsi) == false || (opsi != 1 && opsi != 2) ) continue;;
+		if(get_input(opsi) == false || (opsi != 1 && opsi != 2) ) continue;
 
 		cout << '\n';
 
 		cout << "- Inputkan Jari-Jari : ";
-		if(get_input(jari_jari) == false ) continue;;
+		if(get_input(jari_jari) == false ) continue;
 
 		cout << "- Inputkan Tinggi    : ";
-		if(get_input(tinggi) == false ) continue;;
+		if(get_input(tinggi) == false ) continue;
 
 		cout << '\n';
 
@@ -88,7 +88,7 @@ main()
 		cout << "Luas Permukaan: " << hasil << endl;
 	} else if (opsi == 2) {
 		cout << "RUMUS: phi x r^2 x t" << endl;
-		cout << "Volume: " << hasil << endl;;
+		cout << "Volume: " << hasil << endl;
 	}
 
 	cout << "==============================================" << endl;
