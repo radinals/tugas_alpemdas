@@ -6,37 +6,17 @@
 
 using namespace std;
 
-const int besar_denda = 5000; // rupiah
-const int tempo_denda = 7; // hari
-
-// menggunakan long long int
-// karena ini merubah string ke angka,
-// besar angka tidak diketauhi.
-long long int
-str2num(string str)
-{
-	long long int tmp;
-	stringstream s;
-
-	s << str;
-	s >> tmp;
-
-	return tmp;
-}
-
-long long int
-hitung_denda(string hari_dipinjam)
-{
-	// denda dihitung dari per tempo yg di tentukan
-	// misalkan tempo nya 7 hari, maka jika buku dipinjam
-	// 13 hari, denda yg akan dikenakan adalah 13 hari dibagi 7,
-	// maka didapatkan 1 yg kemudian di kalikan dengan besar denda.
-	return besar_denda * (str2num(hari_dipinjam) / tempo_denda);
-}
+long long int str2num(string str);
+long long int hitung_denda(string hari_dipinjam, int besar_denda, int tempo_denda);
+void print_data(int no, string nama, string hari, long long int denda);
+void print_data(string no, string nama, string hari, string denda);
 
 int
 main()
 {
+	const int besar_denda = 5000; // rupiah
+	const int tempo_denda = 7; // hari
+				   //
 	// jumlah data anggota yg akan disimpan
 	int jumlah_peminjam = 0;
 
@@ -64,25 +44,62 @@ main()
 
 	// outputkan header
 	cout << "-------------------- DATA PEMINJAMAN BUKU --------------------------" << endl;
-	cout << "|" <<
-		right << setw(3)  << "NO"                    << setw(2) << "|" <<
-		left  << setw(20) << "NAMA ANGGOTA"          << setw(2) << "|" <<
-		right << setw(15) << "LAMA HARI PEMINJAMAN"  << setw(2) << "|" <<
-		right << setw(15) << "DENDA (RP.)"           << setw(2) << "|";
-	cout << endl;
+	print_data(string("NO"), string("NAMA ANGGOTA"), string("LAMA HARI PEMINJAMAN"), string("DENDA (RP.)"));
 
 	// outputkan data
 	for(size_t i=0; i < jumlah_peminjam; i++ ) {
 		cout << "-------------------------------------------------------------------" << endl;
-		cout << "|" <<
-			right << setw(3) << i+1                                << setw(2) << "|" <<
-			left  << setw(20) << data_peminjam[i][0]               << setw(2) << "|" <<
-			right << setw(20) << data_peminjam[i][1]               << setw(2) << "|" <<
-			right << setw(15) << hitung_denda(data_peminjam[i][1]) << setw(2) << "|";
-		cout << endl;
+		print_data((int)i+1, data_peminjam[i][0], data_peminjam[i][1], (long long int) hitung_denda(data_peminjam[i][1], besar_denda, tempo_denda));
 	}
-
 	cout << "-------------------------------------------------------------------" << endl;
 
+	cin.get();
 	return 0;
+}
+
+void
+print_data(size_t no, string nama, string hari, int denda)
+{
+	cout << "|" <<
+		right << setw(3)  << no    << setw(2) << "|" <<
+		left  << setw(20) << nama  << setw(2) << "|" <<
+		right << setw(20) << hari  << setw(2) << "|" <<
+		right << setw(15) << denda << setw(2) << "|";
+	cout << endl;
+
+}
+
+void
+print_data(string no, string nama, string, string hari, string denda);
+{
+	cout << "|" <<
+		right << setw(3)  << no    << setw(2) << "|" <<
+		left  << setw(20) << nama  << setw(2) << "|" <<
+		right << setw(20) << hari  << setw(2) << "|" <<
+		right << setw(15) << denda << setw(2) << "|";
+	cout << endl;
+}
+
+// menggunakan long long int
+// karena ini merubah string ke angka,
+// besar angka tidak diketauhi.
+long long int
+str2num(string str)
+{
+	long long int tmp;
+	stringstream s;
+
+	s << str;
+	s >> tmp;
+
+	return tmp;
+}
+
+long long int hitung_denda(string hari_dipinjam, int besar_denda, int tempo_denda)
+{
+	// denda dihitung dari per tempo yg di tentukan
+	// misalkan tempo nya 7 hari, maka jika buku dipinjam
+	// 13 hari, denda yg akan dikenakan adalah 13 hari dibagi 7,
+	// maka didapatkan 1 yg kemudian di kalikan dengan besar denda.
+	return besar_denda * (str2num(hari_dipinjam) / tempo_denda);
 }
