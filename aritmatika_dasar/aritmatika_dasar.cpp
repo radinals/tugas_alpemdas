@@ -22,6 +22,8 @@ main()
 
 		if (user_input == correct_answ) {
 			cout << "JAWABAN BENAR!\n";
+		} else if (user_input == "EXIT") {
+			break;
 		} else {
 			cout << "JAWABAN SALAH!, yang benar adalah " << correct_answ << "\n";
 			wrong_count++;
@@ -30,7 +32,7 @@ main()
 	return 0;
 }
 
-// kalau pakai srand(time()), kurang random... 
+// kalau pakai srand(time()), kurang random...
 // angka yg digenerate bisa sama berkali-kali
 // karena untuk nilai seed nya berubah, harus diberi waktu
 // antara generasi angka, agar bisa beda (bedasarkan system clock)
@@ -46,7 +48,7 @@ rand_range(int x, int y)
 	std::uniform_int_distribution<> uni(x,y);
 
 	// kembalikan angka random
-	return uni(rng);  
+	return uni(rng);
 }
 
 // menggembalikan nilai-nilai melalui reffrence, agar satu fungsi bisa
@@ -63,27 +65,27 @@ gen_question(string& out_str, string& out_answ, int max_n, int min_n)
 	int n_1, n_2;
 	string op;
 
-	// dapatkan angka untuk soal 
+	// dapatkan angka untuk soal
 	n_1 = rand_range(min_n, max_n);
 	n_2 = rand_range(min_n, max_n);
-	
+
 	// pilih operator, dan dapatkan hasil yg benar
 	switch (rand_range(0, 3)) {
-		case 0: 
+		case 0:
 			op = "+";
-			out_answ = to_string(n_1 + n_2);	
+			out_answ = to_string(n_1 + n_2);
 			break;
-		case 1: 
+		case 1:
 			op = "-";
-			out_answ = to_string(n_1 - n_2);	
+			out_answ = to_string(n_1 - n_2);
 			break;
-		case 2: 
+		case 2:
 			op = ":";
 			out_answ = to_string(n_1 / n_2);
 			break;
-		case 3: 
+		case 3:
 			op = "X";
-			out_answ = to_string(n_1 * n_2);	
+			out_answ = to_string(n_1 * n_2);
 			break;
 		default:
 			exit(1);
