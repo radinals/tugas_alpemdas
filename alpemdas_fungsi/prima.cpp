@@ -11,26 +11,24 @@ int main()
 	return 0;
 }
 
+// cek suatu angka apakah prima (true or false)
 bool
-is_prima(int n) 
+is_prima(int n)
 {
-	bool prima = true;
-	if (n <= 1) {
-		prima = false;
-	} else {
-		for (size_t i=2; i < n; i++)
-		{
-			if (n % i == 0) {
-				prima = false;
-				break;
-			}
+	if (n <= 1) return false;
 
-		}
+	for (size_t i=2; i < n; i++)
+	{
+		if (n % i == 0)
+			return true;
+
 	}
-	return prima;
-} 
 
-void 
+	return false;
+}
+
+// cari angka-angka prima,dari start hingga end.
+void
 cari_prima(size_t start, size_t end)
 {
 	cout << "PRIMA (" << start << ".." << end << "): {";
@@ -44,4 +42,3 @@ cari_prima(size_t start, size_t end)
 
 	cout << "} " << endl;
 }
-
