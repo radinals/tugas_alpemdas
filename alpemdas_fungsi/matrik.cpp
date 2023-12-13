@@ -16,6 +16,11 @@ int main()
 	print_matrix(data, 3, 3);
 }
 
+// suatu matrix harus dinyatakan secara explisit di deklarasi
+// fungsi yang menerimanya sebagai argumen. fungsi ini terima
+// matrix 3x3
+
+// print data-data dalam matrix
 void
 print_matrix(int matrx[3][3], size_t baris, size_t kolom)
 {
