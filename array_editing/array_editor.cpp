@@ -9,15 +9,18 @@ void swap_element(size_t from, size_t to, int array[]);
 void del_all(int target, int array[], size_t& array_size, bool(*search_algrthm)(int target, size_t& target_index,  int array[], size_t array_size));
 void print_array(int array[], size_t array_size);
 
-int 
+int
 main()
 {
+	// TODO: Make a menu
+
 	size_t data_size = 9;
 	int data[data_size] = {1,2,3,3,3,6,7,8,9};
 
 	print_array(data, data_size);
 	del_all(3, data, data_size, bin_search);
 	print_array(data, data_size);
+
 	// size_t i;
 	// while(true) {
 	// 	int target;
@@ -31,21 +34,23 @@ main()
 
 }
 
-void 
+// delete all instance of an item, this function takes a search algorithm for the searching
+void
 del_all(int target, int array[], size_t& array_size, bool(*search_algrthm)(int target, size_t& target_index,  int array[], size_t array_size))
 {
 	size_t target_index;
 	// while the target is found
-	while(search_algrthm(target, target_index, array, array_size)) 
+	while(search_algrthm(target, target_index, array, array_size))
 	{
 		// delete the target
 		del_item(target_index, array, array_size);
 	}
 }
 
-// returns true if found, and 
+// returns true if found, and
 // target_index is set to the found item's index
-bool 
+// sequential search
+bool
 sqntial_search(int target, size_t& target_index, int array[], size_t array_size)
 {
 	for (size_t i=0; i < array_size; i++)
@@ -58,43 +63,7 @@ sqntial_search(int target, size_t& target_index, int array[], size_t array_size)
 	return false;
 }
 
-void
-edit_item(size_t index, int new_value,  int array[])
-{
-	array[index] = new_value;
-}
-
-void
-del_item(size_t index, int array[], size_t& array_size)
-{
-	array_size--; // shrink by 1 
-
-	// shift all item to the right, until the last index
-	for (size_t i=index; i < array_size; i++) 
-		swap_element(i, i+1, array);
-
-	// '\0' means end of array
-	// the target index is now the new 'end' of the array
-	array[array_size] = '\0';  
-}
-
-void 
-swap_element(size_t from, size_t to, int array[])
-{
-	int tmp = array[from];
-	array[from] = array[to];
-	array[to] = tmp;
-}
-
-void
-print_array(int array[], size_t size)
-{
-	cout << "{ ";
-	for(size_t i=0; i < size; i++)
-		cout << array[i] << " ";
-	cout << "}\n";
-}
-
+// binary search
 bool
 bin_search(int target, size_t& target_index,  int array[], size_t array_size)
 {
@@ -126,7 +95,46 @@ bin_search(int target, size_t& target_index,  int array[], size_t array_size)
 			return true;
 		}
 	}
-	
-	return false;
 
+	return false;
+}
+
+
+void
+edit_item(size_t index, int new_value,  int array[])
+{
+	if (index < (sizeof(array) / sizeof(array[0])))
+		array[index] = new_value;
+}
+
+// move the target to the end of array, then 'shrink' the array by 1
+void
+del_item(size_t index, int array[], size_t& array_size)
+{
+	array_size--; // shrink element count by 1
+
+	// shift all item to the right, until the last index
+	for (size_t i=index; i < array_size; i++)
+		swap_element(i, i+1, array);
+
+	// '\0' means end of array
+	// the target index is now the new 'end' of the array
+	array[array_size] = '\0';
+}
+
+void
+swap_element(size_t from, size_t to, int array[])
+{
+	int tmp = array[from];
+	array[from] = array[to];
+	array[to] = tmp;
+}
+
+void
+print_array(int array[], size_t size)
+{
+	cout << "{ ";
+	for(size_t i=0; i < size; i++)
+		cout << array[i] << " ";
+	cout << "}\n";
 }
