@@ -4,10 +4,6 @@
 
 using namespace std;
 
-// dapatkan panjang suatu array
-// WARNING: menghitung panjang suatu array, bkn jumlah elemen
-#define arr_size(arr) (sizeof(arr) / sizeof(arr[0]))
-
 void pecahan(int nominal);
 
 int
@@ -34,7 +30,7 @@ pecahan(int nominal)
 		200, 100, 10, 1
 	};
 
-	for (size_t i=0; i < arr_size(kelipatan); i++)
+	for (size_t i=0; i < (sizeof(kelipatan) / sizeof(kelipatan[0])); i++)
 	{
 		// dapatkan jumlah lembar
 		int pecahan = ( nominal / kelipatan[i] );
