@@ -1,4 +1,6 @@
 #include <cstddef>
+#include <ios>
+#include <limits>
 #include <random>
 #include <iostream>
 #include <cstdlib>
@@ -379,7 +381,13 @@ user_input(Mark marktype)
 	{
 		int cell_dipilih = -1;
 		std::cout << " > Masukan cell yang ingin di tandai [1, 9]: ";
+
 		std::cin >> cell_dipilih;
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 
 		if (cell_dipilih == -1) continue;
 
