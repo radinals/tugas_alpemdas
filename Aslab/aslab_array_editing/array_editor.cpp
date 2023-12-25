@@ -1,10 +1,10 @@
 #include <iostream>
 using namespace std;
 
-bool bin_search(int target, size_t& target_index,  int array[], size_t array_size);
+bool bin_search(int target, size_t& ret_index,  int array[], size_t array_size);
 bool sqntial_search(int target, size_t& target_index, int array[], size_t array_size);
 void del_item(size_t index, int array[], size_t& array_size);
-void edit_item(size_t index, int new_value, int array[]);
+void edit_item(size_t index, int new_value, int array[], size_t array_size);
 void swap_element(size_t from, size_t to, int array[]);
 void del_all(int target, int array[], size_t& array_size, bool(*search_algrthm)(int target, size_t& target_index,  int array[], size_t array_size));
 void print_array(int array[], size_t array_size);
@@ -17,9 +17,12 @@ main()
 	size_t data_size = 9;
 	int data[data_size] = {1,2,3,3,3,6,7,8,9};
 
-	print_array(data, data_size);
-	del_all(3, data, data_size, bin_search);
-	print_array(data, data_size);
+	// print_array(data, data_size);
+	// del_all(3, data, data_size, bin_search);
+	size_t i=0;
+	bin_search(3, i, data, data_size);
+	cout << i;
+	// print_array(data, data_size);
 
 	// size_t i;
 	// while(true) {
@@ -51,47 +54,36 @@ del_all(int target, int array[], size_t& array_size, bool(*search_algrthm)(int t
 // target_index is set to the found item's index
 // sequential search
 bool
-sqntial_search(int target, size_t& target_index, int array[], size_t array_size)
+sqntial_search(int target, size_t& ret_index, int array[], size_t array_size)
 {
 	for (size_t i=0; i < array_size; i++)
 	{
 		if (array[i] == target) {
-			target_index = i;
+			ret_index = i;
 			return true;
 		}
 	}
 	return false;
 }
 
+// FIXME: INFINITE LOOP
 // binary search
 bool
-bin_search(int target, size_t& target_index,  int array[], size_t array_size)
+bin_search(int target, size_t& ret_index,  int array[], size_t array_size)
 {
-	size_t left, right, middle;
+	size_t left=0, right=array_size-1;
+	size_t middle=(left+right)/2;
 
-	left = 0;
-	right = array_size-1;
-
-	if (array[left] == target) {
-		target_index = left;
-		return true;
-	} else if (array[right] == target) {
-		target_index = right;
-		return true;
-	}
-
-	middle=(left+right)/2;
-
-	for(; left <= right; middle=(left+right)/2)
+	while(left < right);
 	{
 		if (array[middle] > target) {
-			right = middle-1;
+			right = (middle-=1);
 
 		} else if (array[middle] < target) {
-			left = middle+1;
+			left = (middle+=1);
 
 		} else if (array[middle] == target) {
-			target_index = middle;
+			ret_index = middle;
 			return true;
 		}
 	}
@@ -101,9 +93,9 @@ bin_search(int target, size_t& target_index,  int array[], size_t array_size)
 
 
 void
-edit_item(size_t index, int new_value,  int array[])
+edit_item(size_t index, int new_value,  int array[], size_t array_size)
 {
-	if (index < (sizeof(array) / sizeof(array[0])))
+	if (index < array_size)
 		array[index] = new_value;
 }
 
