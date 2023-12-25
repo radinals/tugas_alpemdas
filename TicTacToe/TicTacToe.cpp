@@ -262,9 +262,6 @@ cek_tabel_diag_kebawah(Mark mark_query)
 
 		if (count >= win_min)  // keluar jika sudah sesuai
 			return true;
-		else
-			count = 0; /// reset hitungan jika belum sesuai
-
 	}
 	return false; // jika tidak ketemu
 }
@@ -293,9 +290,6 @@ cek_tabel_diag_keatas(Mark mark_query)
 
 		if (count >= win_min)  // keluar jika sudah sesuai
 			return true;
-		else
-			count = 0; /// reset hitungan jika belum sesuai
-
 	}
 	return false; // jika tidak ketemu
 }
