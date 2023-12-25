@@ -16,6 +16,7 @@ result check_condition(opsi player, opsi computer);
 int main()
 {
 	game();
+	return 0;
 }
 
 void
