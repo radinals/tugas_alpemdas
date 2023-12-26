@@ -40,12 +40,8 @@ Mark tabel_game[tabel_game_lines][tabel_game_cols] =
 	{Mark::EMPTY,Mark::EMPTY,Mark::EMPTY},
 };
 
-// fungsi-fungsi pengecekan jika mark_query muncul secara deret
-bool cek_tabel_horiz(Mark mark_query); // secara horizontal
-bool cek_tabel_vert(Mark mark_query); // secara vertical
-bool cek_tabel_diag_kebawah(Mark mark_query); // diagonal, kiri atas -> kebawah
-bool cek_tabel_diag_keatas(Mark mark_query); // diagonal, kiri bawah -> keatas
-bool cek_tabel(Mark mark_query); // semua fungsi pengecekan dipangil oleh ini
+// fungsi-fungsi pengecekan tabel
+bool cek_tabel(Mark mark_query); // cek semua arah tabel (searching)
 bool tabel_penuh(); // mengecek jika tabel sudah penuh (sudah tidak ada cell kosong)
 
 void game(); // game loop
@@ -172,33 +168,69 @@ bool
 cek_tabel(Mark mark_query)
 {
 	// cek semua arah
-	return (cek_tabel_horiz(mark_query) ||
-		cek_tabel_vert(mark_query) ||
-		cek_tabel_diag_keatas(mark_query) ||
-		cek_tabel_diag_kebawah(mark_query));
-}
+	int count_diag_kebawah = 0,
+	    count_diag_keatas = 0,
+	    count_horiz = 0,
+	    count_vert = 0;
 
-bool
-cek_tabel_horiz(Mark mark_query)
-{
-	int count = 0;
+	int line_diag_kebawah = 0,
+	    line_diag_keatas = tabel_game_lines - 1,
+	    line_horiz=0,
+	    line_vert=0;
 
-	for (int y=0; y < tabel_game_lines; y++)
+	int col_diag_kebawah = 0,
+	    col_diag_keatas=0,
+	    col_horiz=0,
+	    col_vert=0;
+
+	for (int ny=0; ny < tabel_game_lines; ny++) // loop sebanyak baris
 	{
-		for (int x=0; x < tabel_game_cols; x++)
-		{
- 			// hitung berapa kali muncul
-			if (cell_at(x,y) == mark_query)
-				count++;
-		}
+		// cek diagonal kebawah
+		if (cell_at(col_diag_kebawah, line_diag_kebawah) == mark_query)
+			count_diag_kebawah++;
+		if (count_diag_kebawah >= win_min)  // keluar jika sudah sesuai
+			return true;
 
-		if (count >= win_min)  // keluar jika sudah sesuai
+		line_diag_kebawah++; col_diag_kebawah++;
+
+		// cek diagonal keatas
+		if (cell_at(col_diag_keatas, line_diag_keatas) == mark_query)
+			count_diag_keatas++;
+		if (count_diag_keatas >= win_min)  // keluar jika sudah sesuai
+			return true;
+
+		line_diag_keatas--; col_diag_keatas++;
+
+		for (int nx=0; nx < tabel_game_cols; nx++) // loop sebanyak kolom
+		{
+			// cek horizontal
+			if (cell_at(col_horiz,line_horiz) == mark_query)
+				count_horiz++;
+			col_horiz++;
+
+			// cek vertical
+			if (cell_at(col_vert,line_vert) == mark_query)
+				count_vert++;
+			line_vert++;
+		}
+		// cek horizontal
+		if (count_horiz >= win_min)  // keluar jika sudah sesuai
 			return true;
 		else
-			count = 0; /// reset hitungan jika belum sesuai
+			count_horiz = 0; /// reset hitungan jika belum sesuai
 
+		line_horiz++;
+
+		// cek vertical
+		if (count_vert >= win_min)  // keluar jika sudah sesuai
+			return true;
+		else
+			count_vert = 0; /// reset hitungan jika belum sesuai
+
+		col_vert++;
 	}
-	return false; // jika tidak ketemu
+
+	return false;
 }
 
 bool
@@ -212,80 +244,6 @@ tabel_penuh() // tabel penuh jika sudah tidak ada cell 'kosong'
 		}
 	}
 	return true;
-}
-
-bool
-cek_tabel_vert(Mark mark_query)
-{
-	int count = 0, // hitungan
-		col = 0, line = 0; // index baris dan kolom yang akan digunakan
-
-	for (int ny=0; ny < tabel_game_lines; ny++) // loop sebanyak baris
-	{
-		for (int nx=0; nx < tabel_game_cols; nx++) // loop sebanyak kolom
-		{
-			// jika yang dicari ketemu
-			if (cell_at(col,line) == mark_query) count++; // increment hitungan
-
-			line++; // tiap kolom increment baris (agar bergerak kebawah)
-		}
-
-		col++; // increment kolom (agar bergerak ke kanan)
-		line = 0; // reset baris ke awal
-
-		if (count >= win_min)  // keluar jika hitungan sudah sesuai
-			return true; // return success
-		else
-			count = 0; // reset hitungan jika belum sesuai
-
-	}
-	return false; // jika tidak ketemu
-
-}
-
-bool
-cek_tabel_diag_kebawah(Mark mark_query)
-{
-	int count = 0, // hitungan
-		col = 0, line = 0; // index baris dan kolom yang akan digunakan
-
-	for (int ny=0; ny < tabel_game_lines; ny++) // loop sebanyak baris
-	{
-		// hitung berapa kali muncul
-		if (cell_at(col, line) == mark_query) count++;
-
-		// baris dan kolom din increment berbarengan,
-		// agar bergerak menuju kanan bawah secara diagonal.
-		line++; col++;
-
-		if (count >= win_min)  // keluar jika hitungan sudah sesuai
-			return true;
-	}
-	return false; // jika tidak ketemu
-}
-
-bool
-cek_tabel_diag_keatas(Mark mark_query)
-{
-	// hitungan dan, index baris dan kolom yang akan digunakan
-	int count = 0,
-		line = tabel_game_lines - 1, // mulai dari index terakhir
-	    	col = 0;
-
-	for (int ny=0; ny < tabel_game_lines; ny++) // loop sebanyak baris
-	{
-		// hitung berapa kali muncul
-		if (cell_at(col, line) == mark_query) count++;
-
-		// decremen nilai, karena mulai dari baris paling bawah
-      		// jadi ini akan menuju ke index 0
-		line--;
-		col++; // dan agar bergerak kekanan
-
-		if (count >= win_min)  // keluar jika hitungan sudah sesuai
-			return true;
-	}
-	return false; // jika tidak ketemu
 }
 
 bool
