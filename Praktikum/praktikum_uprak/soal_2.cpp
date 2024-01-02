@@ -55,7 +55,7 @@ bubble_sort(char arr[], int len, bool acending)
 		{
 			if (arr[j] > arr[j+1] && acending)
 				swap(j, j+1, arr);
-			else if (arr[j] > arr[j+1] && ! acending)
+			else if (arr[j] < arr[j+1] && ! acending)
 				swap(j, j+1, arr);
 		}
 	}

@@ -1,9 +1,8 @@
 #include <iostream>
-
 using namespace std;
 
-int 
-main(void) 
+int
+main(void)
 {
 	const int detik_sehari = 86400;
 	int jumlah_hari;

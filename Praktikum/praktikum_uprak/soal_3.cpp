@@ -10,10 +10,8 @@ main()
 	cout << "Masukan baris segitiga: ";
 	cin >> baris;
 
-	for(int i=baris; i > 0; i--)
-	{
-		for (int j=0; j < i; j++)
-			cout << "* ";
+	for (int i = baris; i > 0; i--) {
+		for (int j = 0; j < i; j++) cout << "* ";
 		cout << "\n";
 	}
 

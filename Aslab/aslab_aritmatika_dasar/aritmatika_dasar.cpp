@@ -1,9 +1,9 @@
-#include <random>
 #include <iostream>
+#include <random>
 
-using namespace  std;
+using namespace std;
 
-void gen_question(string& str, string& answ, int max_n=100, int min_n=-100);
+void gen_question(string& str, string& answ, int max_n = 100, int min_n = -100);
 int rand_range(int x, int y);
 
 int
@@ -25,7 +25,8 @@ main()
 		} else if (user_input == "EXIT") {
 			break;
 		} else {
-			cout << "JAWABAN SALAH!, yang benar adalah " << correct_answ << "\n";
+			cout << "JAWABAN SALAH!, yang benar adalah "
+			     << correct_answ << "\n";
 			wrong_count++;
 		}
 	}
@@ -45,7 +46,7 @@ rand_range(int x, int y)
 	std::mt19937 rng(rd());
 
 	// hasilkan integer antara x dan y
-	std::uniform_int_distribution<> uni(x,y);
+	std::uniform_int_distribution<> uni(x, y);
 
 	// kembalikan angka random
 	return uni(rng);
@@ -71,26 +72,25 @@ gen_question(string& out_str, string& out_answ, int max_n, int min_n)
 
 	// pilih operator, dan dapatkan hasil yg benar
 	switch (rand_range(0, 3)) {
-		case 0:
-			op = "+";
-			out_answ = to_string(n_1 + n_2);
-			break;
-		case 1:
-			op = "-";
-			out_answ = to_string(n_1 - n_2);
-			break;
-		case 2:
-			op = ":";
-			out_answ = to_string(n_1 / n_2);
-			break;
-		case 3:
-			op = "X";
-			out_answ = to_string(n_1 * n_2);
-			break;
-		default:
-			exit(1);
-			break;
-
+	case 0:
+		op = "+";
+		out_answ = to_string(n_1 + n_2);
+		break;
+	case 1:
+		op = "-";
+		out_answ = to_string(n_1 - n_2);
+		break;
+	case 2:
+		op = ":";
+		out_answ = to_string(n_1 / n_2);
+		break;
+	case 3:
+		op = "X";
+		out_answ = to_string(n_1 * n_2);
+		break;
+	default:
+		exit(1);
+		break;
 	}
 
 	// formatkan kedalam bentuk soal

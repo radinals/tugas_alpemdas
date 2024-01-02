@@ -2,21 +2,22 @@
 
 using namespace std;
 
-
 void
 segitiga(char c1, char c2, int baris, bool spaced)
 {
-	if (spaced) baris++;
-	for ( int y=0 ; y < baris ; y++ ) {
+	if (spaced)
+		baris++;
+	for (int y = 0; y < baris; y++) {
 
 		// spasi
-		for( int x=0 ; x < baris-y ; x++ ) cout << c2;
+		for (int x = 0; x < baris - y; x++) cout << c2;
 
 		// badan
-		for( int x=0 ; x <= y*2    ; x++ ) cout << ((x % 2 == 0 && spaced) ? c2 : c1);
+		for (int x = 0; x <= y * 2; x++)
+			cout << ((x % 2 == 0 && spaced) ? c2 : c1);
 
 		// spasi
-		for( int x=0 ; x < baris-y ; x++ ) cout << c2;
+		for (int x = 0; x < baris - y; x++) cout << c2;
 
 		cout << endl;
 	}
@@ -26,15 +27,16 @@ void
 segitiga_terbalik(char c1, char c2, int baris, bool spaced)
 {
 
-	for ( int y=baris; y >= 0 ; y-- ) {
+	for (int y = baris; y >= 0; y--) {
 		// spasi
-		for( int x=y ; x < baris   ; x++ ) cout << c2;
+		for (int x = y; x < baris; x++) cout << c2;
 
 		// badan
-	 	for( int x=0 ; x <= y*2    ; x++ ) cout << ((x % 2 == 0 && spaced ) ? c2 : c1);
+		for (int x = 0; x <= y * 2; x++)
+			cout << ((x % 2 == 0 && spaced) ? c2 : c1);
 
 		// spasi
-		for( int x=0 ; x < baris-y ; x++ ) cout << c2;
+		for (int x = 0; x < baris - y; x++) cout << c2;
 		cout << endl;
 	}
 }
@@ -42,13 +44,13 @@ segitiga_terbalik(char c1, char c2, int baris, bool spaced)
 void
 setengah_segitiga_rata_kiri(char c1, char c2, int baris)
 {
-	for( int y=baris ; y > 0 ; y--) {
+	for (int y = baris; y > 0; y--) {
 
 		// spasi
-		for( int x=0; x <= baris-y ; x++ ) cout << c2;
+		for (int x = 0; x <= baris - y; x++) cout << c2;
 
-		//badan
-		for( int x=0; x < y        ; x++ )  cout << c1;
+		// badan
+		for (int x = 0; x < y; x++) cout << c1;
 
 		cout << endl;
 	}
@@ -57,13 +59,13 @@ setengah_segitiga_rata_kiri(char c1, char c2, int baris)
 void
 setengah_segitiga_rata_kanan(char c1, char c2, int baris)
 {
-	for( int y=0 ; y < baris ; y++ ) {
+	for (int y = 0; y < baris; y++) {
 
 		// spasi
-		for(int x=0 ; x < baris-y ; x++) cout << c2;
+		for (int x = 0; x < baris - y; x++) cout << c2;
 
-		//badan
-		for(int x=0 ; x <= y      ; x++) cout << c1;
+		// badan
+		for (int x = 0; x <= y; x++) cout << c1;
 
 		cout << endl;
 	}
@@ -72,19 +74,19 @@ setengah_segitiga_rata_kanan(char c1, char c2, int baris)
 void
 segitiga_rata_kanan(char c1, char c2, int baris)
 {
-	for(int y=0 ; y < (baris-(baris/2))  ; y++ ) {
+	for (int y = 0; y < (baris - (baris / 2)); y++) {
 
-		for(int x=0 ; x < (baris/2)-y ; x++) cout << c1;
+		for (int x = 0; x < (baris / 2) - y; x++) cout << c1;
 
-		for(int x=0 ; x <= y ; x++) cout << c2;
+		for (int x = 0; x <= y; x++) cout << c2;
 
 		cout << endl;
 	}
 
-	for( int y=(baris/2) ; y > 0 ; y--) {
-		for( int x=0; x <= (baris/2)-y ; x++ ) cout << c1;
+	for (int y = (baris / 2); y > 0; y--) {
+		for (int x = 0; x <= (baris / 2) - y; x++) cout << c1;
 
-		for( int x=0; x < y ; x++ )  cout << c2;
+		for (int x = 0; x < y; x++) cout << c2;
 
 		cout << endl;
 	}
@@ -94,24 +96,24 @@ void
 segitiga_rata_kiri(char c1, char c2, int baris)
 {
 
-	for( int y=(baris-(baris/2)) ; y >= 0 ; y--) {
+	for (int y = (baris - (baris / 2)); y >= 0; y--) {
 
 		// spasi
-		for( int x=0; x <= baris/2-y ; x++ ) cout << c2;
+		for (int x = 0; x <= baris / 2 - y; x++) cout << c2;
 
-		//badan
-		for( int x=0; x < y        ; x++ )  cout << c1;
+		// badan
+		for (int x = 0; x < y; x++) cout << c1;
 
 		cout << endl;
 	}
 
-	for( int y=0 ; y < baris/2 ; y++ ) {
+	for (int y = 0; y < baris / 2; y++) {
 
 		// spasi
-		for(int x=0 ; x < baris/2-y ; x++) cout << c2;
+		for (int x = 0; x < baris / 2 - y; x++) cout << c2;
 
-		//badan
-		for(int x=0 ; x <= y      ; x++) cout << c1;
+		// badan
+		for (int x = 0; x <= y; x++) cout << c1;
 
 		cout << endl;
 	}

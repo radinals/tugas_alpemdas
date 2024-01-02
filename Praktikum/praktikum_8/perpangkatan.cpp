@@ -1,5 +1,5 @@
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 
@@ -22,10 +22,10 @@ perpangkatan(double n, int pangkat)
 		pangkat_negatif = true;
 	}
 
-	for (size_t i = 1; i < pangkat; i++)
-		hasil*=n;
+	for (size_t i = 1; i < pangkat; i++) hasil *= n;
 
-	if (pangkat_negatif) return (1.0f / hasil);
+	if (pangkat_negatif)
+		return (1.0f / hasil);
 
 	return hasil;
 }
@@ -41,8 +41,10 @@ main()
 	cout << "Masukan Pangkat: ";
 	cin >> pangkat;
 
-	cout << "perpangkatan(): " << (perpangkatan(angka, pangkat)) << endl;;
-	cout << "pow(): " << (pow(angka, pangkat)) << endl;;
+	cout << "perpangkatan(): " << (perpangkatan(angka, pangkat)) << endl;
+	;
+	cout << "pow(): " << (pow(angka, pangkat)) << endl;
+	;
 
 	return 0;
 }

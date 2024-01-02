@@ -14,7 +14,7 @@ main()
 	if (n <= 1)
 		bkn_prima = true;
 	else {
-		for(int i=2; i < n; i++)
+		for (int i = 2; i < n; i++)
 			if (n % i == 0) {
 				bkn_prima = true;
 				break;
@@ -25,7 +25,6 @@ main()
 		cout << n << " bukan bilangan prima" << endl;
 	else
 		cout << n << " adalah bilangan prima" << endl;
-
 
 	return 0;
 }

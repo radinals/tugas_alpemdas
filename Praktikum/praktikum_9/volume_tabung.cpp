@@ -2,7 +2,7 @@
 #include <limits>
 using namespace std;
 
-const float PHI = (22.0f/7.0f);
+const float PHI = (22.0f / 7.0f);
 
 bool
 get_input(int& var)
@@ -41,7 +41,7 @@ luas_permukaan_tabung(float jari_jari, float tinggi)
 float
 volume_tabung(float jari_jari, float tinggi)
 {
-	return PHI * (jari_jari*jari_jari) * tinggi;
+	return PHI * (jari_jari * jari_jari) * tinggi;
 }
 
 int
@@ -52,21 +52,24 @@ main()
 
 	cout << "==============================================" << endl;
 
-	while(true) {
+	while (true) {
 		cout << "\n";
 		cout << "1. Luas Permukaan Tabung\n";
 		cout << "2. Volume Tabung\n";
 
 		cout << "pilihan <1-2>:";
-		if(get_input(opsi) == false || (opsi != 1 && opsi != 2) ) continue;
+		if (get_input(opsi) == false || (opsi != 1 && opsi != 2))
+			continue;
 
 		cout << '\n';
 
 		cout << "- Inputkan Jari-Jari : ";
-		if(get_input(jari_jari) == false ) continue;
+		if (get_input(jari_jari) == false)
+			continue;
 
 		cout << "- Inputkan Tinggi    : ";
-		if(get_input(tinggi) == false ) continue;
+		if (get_input(tinggi) == false)
+			continue;
 
 		cout << '\n';
 

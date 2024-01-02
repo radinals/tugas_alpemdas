@@ -5,7 +5,8 @@ void squential_search(int angka, int arr[], size_t arr_size);
 void input_data_array(int arr[], size_t size);
 void print_arr(int arr[], size_t arr_size);
 
-int main()
+int
+main()
 {
 	int angka_dicari;
 	size_t jmlh_data;
@@ -24,39 +25,36 @@ int main()
 	squential_search(angka_dicari, data, jmlh_data);
 
 	return 0;
-
 }
-
 
 void
 squential_search(int angka, int arr[], size_t arr_size)
 {
 	bool found = false;
-	for (size_t i=0; i < arr_size; i++) 
-	{
+	for (size_t i = 0; i < arr_size; i++) {
 		if (arr[i] == angka) {
-			cout << angka << " ditemukan di index: " << i << "\n";;
+			cout << angka << " ditemukan di index: " << i << "\n";
+			;
 			found = true;
 		}
 	}
-	if (! found) cout << "Angka tidak ditemukan di array!\n";
+	if (!found)
+		cout << "Angka tidak ditemukan di array!\n";
 }
 
-void 
+void
 input_data_array(int arr[], size_t arr_size)
 {
-	for (size_t i=0; i < arr_size; i++) 
-	{
+	for (size_t i = 0; i < arr_size; i++) {
 		cout << "Input Data ke-" << i << ": ";
 		cin >> arr[i];
 	}
 }
 
-void 
-print_arr(int arr[], size_t arr_size) 
+void
+print_arr(int arr[], size_t arr_size)
 {
 	cout << "{ ";
-	for(size_t i=0; i < arr_size; i++) 
-		cout << arr[i] << " ";
+	for (size_t i = 0; i < arr_size; i++) cout << arr[i] << " ";
 	cout << "} " << endl;
 }

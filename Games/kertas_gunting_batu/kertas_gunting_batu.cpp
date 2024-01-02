@@ -10,15 +10,24 @@
  *    			| |_) | (_| | |_| |_| |
  *    			|____/ \__,_|\__|\__,_|
  *
-*/
+ */
 
+#include <cstdlib>
 #include <iostream>
 #include <string>
-#include <cstdlib>
 #include <time.h>
 
-enum opsi { kertas, gunting, batu, invalid };
-enum result { player_wins, com_wins, draw };
+enum opsi {
+	kertas,
+	gunting,
+	batu,
+	invalid
+};
+enum result {
+	player_wins,
+	com_wins,
+	draw
+};
 
 opsi rng();
 void game();
@@ -27,7 +36,8 @@ void clear_screen();
 std::string get_opsi(opsi);
 result check_condition(opsi player, opsi computer);
 
-int main()
+int
+main()
 {
 	game();
 	return 0;
@@ -41,8 +51,7 @@ game()
 	int user_score, computer_score;
 	user_score = computer_score = 0;
 
-	while(true)
-	{
+	while (true) {
 
 		clear_screen();
 
@@ -52,34 +61,32 @@ game()
 
 		opsi player = input_user();
 
-		if (player == opsi::invalid) continue;
+		if (player == opsi::invalid)
+			continue;
 
 		opsi computer = rng();
 
 		std::cout << "  *> USER OPT: " << get_opsi(player) << "\n";
 		std::cout << "  *> COM OPT: " << get_opsi(computer) << "\n";
 
-		switch (check_condition(player,computer))
-		{
-			case result::player_wins:
-				std::cout << ">>>> Player Wins! >>>>\n";
-				user_score++;
-				break;
-			case result::com_wins:
-				std::cout << ">>>> Computer Wins! >>>>\n";
-				computer_score++;
-				break;
-			case result::draw:
-				std::cout << ">>>> Draw! >>>>\n";
-				break;
+		switch (check_condition(player, computer)) {
+		case result::player_wins:
+			std::cout << ">>>> Player Wins! >>>>\n";
+			user_score++;
+			break;
+		case result::com_wins:
+			std::cout << ">>>> Computer Wins! >>>>\n";
+			computer_score++;
+			break;
+		case result::draw:
+			std::cout << ">>>> Draw! >>>>\n";
+			break;
 		}
 
-		if (user_score >= max)
-		{
+		if (user_score >= max) {
 			std::cout << "=== GAME OVER: User WINS! === \n";
 			break;
-		} else if (computer_score >= max)
-		{
+		} else if (computer_score >= max) {
 			std::cout << "=== GAME OVER: Computer WINS! === \n";
 			break;
 		}
@@ -92,18 +99,18 @@ std::string
 get_opsi(opsi op)
 {
 	switch (op) {
-		case opsi::kertas:
-			return "Kertas";
-			break;
-		case opsi::gunting:
-			return "Gunting";
-			break;
-		case opsi::batu:
-			return "Batu";
-			break;
-		default:
-			return  "Invalid";
-			break;
+	case opsi::kertas:
+		return "Kertas";
+		break;
+	case opsi::gunting:
+		return "Gunting";
+		break;
+	case opsi::batu:
+		return "Batu";
+		break;
+	default:
+		return "Invalid";
+		break;
 	}
 }
 
@@ -115,18 +122,18 @@ input_user()
 	std::cout << "Pilihan: ";
 	getline(std::cin, input);
 
-	if (input.empty()) return opsi::invalid;
+	if (input.empty())
+		return opsi::invalid;
 
-	switch(input.at(0))
-	{
-		case '1':
-			return opsi::kertas;
-		case '2':
-			return opsi::gunting;
-		case '3':
-			return opsi::batu;
-		default:
-			return opsi::invalid;
+	switch (input.at(0)) {
+	case '1':
+		return opsi::kertas;
+	case '2':
+		return opsi::gunting;
+	case '3':
+		return opsi::batu;
+	default:
+		return opsi::invalid;
 	}
 }
 
@@ -139,7 +146,7 @@ clear_screen()
 opsi
 rng()
 {
-    	srand(time(0));
+	srand(time(0));
 	return opsi(rand() % (opsi::kertas - opsi::batu));
 }
 

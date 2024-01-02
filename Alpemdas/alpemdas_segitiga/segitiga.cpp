@@ -7,16 +7,13 @@ segitiga(char c1, char c2, int baris)
 	for (int y = 0; y < baris; y++) {
 
 		// spasi
-		for (int x = 0; x < baris - y; x++)
-			cout << c2;
+		for (int x = 0; x < baris - y; x++) cout << c2;
 
 		// badan
-		for (int x = 0; x <= y * 2; x++)
-			cout << c1;
+		for (int x = 0; x <= y * 2; x++) cout << c1;
 
 		// spasi
-		for (int x = 0; x < baris - y; x++)
-			cout << c2;
+		for (int x = 0; x < baris - y; x++) cout << c2;
 
 		cout << endl;
 	}
@@ -26,18 +23,15 @@ void
 segitiga_terbalik(char c1, char c2, int baris)
 {
 
-	for (int y = baris-1; y >= 0; y--) {
+	for (int y = baris - 1; y >= 0; y--) {
 		// spasi
-		for (int x = y; x < baris; x++)
-			cout << c2;
+		for (int x = y; x < baris; x++) cout << c2;
 
 		// badan
-		for (int x = 0; x <= y * 2; x++)
-			cout << c1;
+		for (int x = 0; x <= y * 2; x++) cout << c1;
 
 		// spasi
-		for (int x = 0; x < baris - y; x++)
-			cout << c2;
+		for (int x = 0; x < baris - y; x++) cout << c2;
 
 		cout << endl;
 	}

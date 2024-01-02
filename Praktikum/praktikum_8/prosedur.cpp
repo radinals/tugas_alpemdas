@@ -35,8 +35,8 @@ luas_persegi()
 	cout << "-> Masukan Panjang Sisi: ";
 	get_input(panjang_sisi);
 
-
-	cout << "Luas Persegi adalah, " << panjang_sisi*panjang_sisi << " cm" << endl;
+	cout << "Luas Persegi adalah, " << panjang_sisi * panjang_sisi << " cm"
+	     << endl;
 }
 
 void
@@ -50,7 +50,8 @@ luas_segitiga()
 	cout << "-> Masukan Tinggi: ";
 	get_input(tinggi);
 
-	cout << "Luas Segitiga adalah, " << (0.5f * ukuran_alas * tinggi) << " cm" << endl;
+	cout << "Luas Segitiga adalah, " << (0.5f * ukuran_alas * tinggi)
+	     << " cm" << endl;
 }
 
 void
@@ -63,17 +64,17 @@ luas_lingkaran()
 
 	jari_jari = 0.5f * panjang_diameter;
 
-	cout << "Luas Lingkaran adalah, " << ((22.0f/7.0f) * jari_jari * jari_jari) << " cm" << endl;
+	cout << "Luas Lingkaran adalah, "
+	     << ((22.0f / 7.0f) * jari_jari * jari_jari) << " cm" << endl;
 }
 
 int
 main()
 {
-	while (true)
-	{
+	while (true) {
 		clear_console
 
-		int opsi;
+		    int opsi;
 
 		cout << endl;
 		cout << "1. Luas Persegi" << endl;
@@ -85,27 +86,30 @@ main()
 		cout << "Pilihan: ";
 		get_input(opsi);
 
-		switch (opsi)
-		{
-			case 1:
-				cout << "Pilihan: Luas Persegi" << endl;;
-				luas_persegi();
-				break;
-			case 2:
-				cout << "Pilihan: Luas Segitiga" << endl;;
-				luas_segitiga();
-				break;
-			case 3:
-				cout << "Pilihan: Luas Lingkaran" << endl;;
-				luas_lingkaran();
-				break;
-			case 4:
-				return 0;
+		switch (opsi) {
+		case 1:
+			cout << "Pilihan: Luas Persegi" << endl;
+			;
+			luas_persegi();
+			break;
+		case 2:
+			cout << "Pilihan: Luas Segitiga" << endl;
+			;
+			luas_segitiga();
+			break;
+		case 3:
+			cout << "Pilihan: Luas Lingkaran" << endl;
+			;
+			luas_lingkaran();
+			break;
+		case 4:
+			return 0;
 
-			default:
-				cout << "Input Invalid!" << endl;;
-				cin.get();
-				continue;
+		default:
+			cout << "Input Invalid!" << endl;
+			;
+			cin.get();
+			continue;
 		}
 
 		cin.get();

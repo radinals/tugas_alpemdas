@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void bubble_sort(int array[], size_t array_size, bool decending=false);
+void bubble_sort(int array[], size_t array_size, bool decending = false);
 void swap_array_item(size_t from, size_t to, int array[]);
 void print_array(int array[], size_t array_size);
 
@@ -10,7 +10,7 @@ int
 main()
 {
 	size_t arr_size = 15;
-	int arr[15] = { 5, 4, 3, 2, 1, -1, 34, 12, 9, 3, 30, -12, -22, 7, 8};
+	int arr[15] = {5, 4, 3, 2, 1, -1, 34, 12, 9, 3, 30, -12, -22, 7, 8};
 
 	cout << "BEFORE: ";
 	print_array(arr, arr_size);
@@ -25,21 +25,18 @@ void
 bubble_sort(int array[], size_t array_size, bool decending)
 {
 	// shift the biggest number increasingly to the right
-	for(size_t n = 0; n < array_size; n++)
-	{
+	for (size_t n = 0; n < array_size; n++) {
 		// element at array_size-n is always the biggest,
 		// array_size- n - 1 to optimize
-		for(size_t i=0; i < array_size-n-1; i++)
-		{
+		for (size_t i = 0; i < array_size - n - 1; i++) {
 			// the current one is bigger than the one in the right
 			// swap the current to the right
-			if (decending)
-			{
-				if (array[i] < array[i+1])
-					swap_array_item(i, i+1, array);
+			if (decending) {
+				if (array[i] < array[i + 1])
+					swap_array_item(i, i + 1, array);
 			} else {
-				if (array[i] > array[i+1])
-					swap_array_item(i, i+1, array);
+				if (array[i] > array[i + 1])
+					swap_array_item(i, i + 1, array);
 			}
 		}
 	}
@@ -56,8 +53,7 @@ swap_array_item(size_t from, size_t to, int array[])
 void
 print_array(int array[], size_t array_size)
 {
-	for (size_t i=0; i < array_size; i++)
-	{
+	for (size_t i = 0; i < array_size; i++) {
 		cout << array[i] << ", ";
 	}
 

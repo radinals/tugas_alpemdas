@@ -1,13 +1,13 @@
-#include <iostream>
 #include <iomanip>
 #include <ios>
+#include <iostream>
 #include <sstream>
 #include <string>
 
 using namespace std;
 
 const int besar_denda = 5000; // rupiah
-const int tempo_denda = 7; // hari
+const int tempo_denda = 7;    // hari
 
 // dengan menggunakan struct
 // untuk menyimpan data bertipe data beda
@@ -22,7 +22,6 @@ typedef struct Peminjam {
 	string nama;
 	long long int lama_peminjaman;
 } Peminjam;
-
 
 long long int
 hitung_denda(long long int hari_dipinjam)
@@ -48,37 +47,44 @@ main()
 	Peminjam data_peminjam[jumlah_peminjam];
 
 	// inputkan data
-	for(size_t i=0; i < jumlah_peminjam; i++ ) {
+	for (size_t i = 0; i < jumlah_peminjam; i++) {
 		cout << endl;
-		cout << "NO: " << i+1 << endl;
+		cout << "NO: " << i + 1 << endl;
 		cout << "Masukan Nama          : ";
-		cin  >> data_peminjam[i].nama;
+		cin >> data_peminjam[i].nama;
 		cout << "Masukan Hari Dipinjam : ";
-		cin  >> data_peminjam[i].lama_peminjaman;
+		cin >> data_peminjam[i].lama_peminjaman;
 	}
 
 	// outputkan header
-	cout << "-------------------- DATA PEMINJAMAN BUKU --------------------------" << endl;
+	cout << "-------------------- DATA PEMINJAMAN BUKU "
+	        "--------------------------"
+	     << endl;
 
-	cout << "|" <<
-		right << setw(3)  << "NO"                    << setw(2) << "|" <<
-		left  << setw(20) << "NAMA ANGGOTA"          << setw(2) << "|" <<
-		right << setw(15) << "LAMA HARI PEMINJAMAN"  << setw(2) << "|" <<
-		right << setw(15) << "DENDA (RP.)"           << setw(2) << "|";
+	cout << "|" << right << setw(3) << "NO" << setw(2) << "|" << left
+	     << setw(20) << "NAMA ANGGOTA" << setw(2) << "|" << right
+	     << setw(15) << "LAMA HARI PEMINJAMAN" << setw(2) << "|" << right
+	     << setw(15) << "DENDA (RP.)" << setw(2) << "|";
 	cout << endl;
 
 	// outputkan data
-	for(size_t i=0; i < jumlah_peminjam; i++ ) {
-		cout << "-------------------------------------------------------------------" << endl;
-		cout << "|" <<
-			right << setw(3) << i+1                                << setw(2) << "|" <<
-			left  << setw(20) << data_peminjam[i].nama             << setw(2) << "|" <<
-			right << setw(20) << data_peminjam[i].lama_peminjaman  << setw(2) << "|" <<
-			right << setw(15) << hitung_denda(data_peminjam[i].lama_peminjaman) << setw(2) << "|";
+	for (size_t i = 0; i < jumlah_peminjam; i++) {
+		cout << "------------------------------------------------------"
+		        "-------------"
+		     << endl;
+		cout << "|" << right << setw(3) << i + 1 << setw(2) << "|"
+		     << left << setw(20) << data_peminjam[i].nama << setw(2)
+		     << "|" << right << setw(20)
+		     << data_peminjam[i].lama_peminjaman << setw(2) << "|"
+		     << right << setw(15)
+		     << hitung_denda(data_peminjam[i].lama_peminjaman)
+		     << setw(2) << "|";
 		cout << endl;
 	}
 
-	cout << "-------------------------------------------------------------------" << endl;
+	cout << "--------------------------------------------------------------"
+	        "-----"
+	     << endl;
 
 	return 0;
 }

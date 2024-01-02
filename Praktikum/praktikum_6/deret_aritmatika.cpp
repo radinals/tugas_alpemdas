@@ -1,11 +1,11 @@
 #include <iostream>
 
-using namespace std;;
+using namespace std;
 
 int
 main()
 {
-	int angka_pertama, angka_beda, jumlah_suku, sigma=0;
+	int angka_pertama, angka_beda, jumlah_suku, sigma = 0;
 
 	cout << "Masukan Angka Pertama: ";
 	cin >> angka_pertama;
@@ -17,10 +17,10 @@ main()
 	cin >> jumlah_suku;
 
 	cout << "Deret                : ";
-	while ( (jumlah_suku--) > 0 ) {
+	while ((jumlah_suku--) > 0) {
 		cout << angka_pertama << " ";
-		sigma+=angka_pertama;
-		angka_pertama+=angka_beda;
+		sigma += angka_pertama;
+		angka_pertama += angka_beda;
 	}
 
 	cout << endl;
