@@ -1,10 +1,10 @@
 #include <iostream>
 using namespace std;
 
-int** new_matrix(size_t x, size_t y);
-void delete_matrix(size_t y, int** matrix);
+int** new_matrix(size_t cols, size_t lines);
+void delete_matrix(size_t lines, int** matrix);
 int* create_array(size_t size);
-void delete_matrix(size_t x, size_t y, int** matrix);
+void delete_matrix(size_t cols, size_t lines, int** matrix);
 
 int
 main()
@@ -23,19 +23,23 @@ main()
 }
 
 void
-delete_matrix(size_t x, size_t y, int** matrix)
+delete_matrix(size_t cols, size_t lines, int** matrix)
 {
-	for (int i = 0; i < y; i++) delete[] matrix[x];
+	while (lines >= 0) {
+		delete[] matrix[cols];
+		lines--;
+	};
 	delete[] matrix;
 }
 
 int**
-new_matrix(size_t x, size_t y)
+new_matrix(size_t cols, size_t lines)
 {
 	try {
-		int** matrix = new int*[y];
+		int** matrix = new int*[lines];
 
-		for (size_t i = 0; i < y; i++) matrix[i] = create_array(x);
+		for (size_t i = 0; i < lines; i++)
+			matrix[i] = create_array(cols);
 
 		return matrix;
 
