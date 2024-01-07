@@ -23,6 +23,7 @@ string get_nama(string data[][2], size_t i);
 string get_hari(string data[][2], size_t i);
 void set_nama(string data[][2], size_t i);
 void set_hari(string data[][2], size_t i);
+void validate_index(size_t index);
 
 const int besar_denda = 5000; // rupiah
 const int tempo_denda = 7;    // hari
@@ -32,11 +33,6 @@ const size_t max_col_length = 20;
 
 // jumlah data anggota yg akan disimpan
 int jumlah_peminjam = 0;
-
-// quick lamda for checking out of bound indexes
-// clang-format off
-auto validate_index = [](size_t index) -> void { if (index >= jumlah_peminjam) throw std::out_of_range("index out of bounds"); };
-// clang-format on
 
 int
 main()
@@ -206,3 +202,10 @@ set_hari(string data[][2], size_t i)
 	validate_index(i);
 	cin >> data[i][1];
 }
+
+void
+validate_index(size_t index)
+{
+	if (index >= jumlah_peminjam)
+		throw std::out_of_range("index out of bounds");
+};
