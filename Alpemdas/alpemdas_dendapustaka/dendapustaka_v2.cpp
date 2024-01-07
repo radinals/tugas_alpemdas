@@ -1,10 +1,17 @@
 #include <iomanip>
 #include <ios>
 #include <iostream>
-#include <sstream>
 #include <string>
 
 using namespace std;
+
+struct Peminjam;
+
+long long hitung_denda(long long hari_dipinjam);
+void input_tabel(Peminjam data_peminjam[], int jumlah_peminjam);
+void print_data(size_t no, string nama, long long hari, long long denda);
+void print_data(string no, string nama, string hari, string denda);
+void print_tabel(Peminjam data_peminjam[], int jumlah_peminjam);
 
 const int besar_denda = 5000; // rupiah
 const int tempo_denda = 7;    // hari
@@ -20,18 +27,8 @@ const int tempo_denda = 7;    // hari
 // Peminjam var;
 typedef struct Peminjam {
 	string nama;
-	long long int lama_peminjaman;
+	long long lama_peminjaman;
 } Peminjam;
-
-long long int
-hitung_denda(long long int hari_dipinjam)
-{
-	// denda dihitung dari per tempo yg di tentukan
-	// misalkan tempo nya 7 hari, maka jika buku dipinjam
-	// 13 hari, denda yg akan dikenakan adalah 13 hari dibagi 7,
-	// maka didapatkan 1 yg kemudian di kalikan dengan besar denda.
-	return (besar_denda * (hari_dipinjam) / tempo_denda);
-}
 
 int
 main()
@@ -47,44 +44,76 @@ main()
 	Peminjam data_peminjam[jumlah_peminjam];
 
 	// inputkan data
-	for (size_t i = 0; i < jumlah_peminjam; i++) {
-		cout << endl;
-		cout << "NO: " << i + 1 << endl;
-		cout << "Masukan Nama          : ";
-		cin >> data_peminjam[i].nama;
-		cout << "Masukan Hari Dipinjam : ";
-		cin >> data_peminjam[i].lama_peminjaman;
-	}
+	input_tabel(data_peminjam, jumlah_peminjam);
 
 	// outputkan header
-	cout << "-------------------- DATA PEMINJAMAN BUKU "
-	        "--------------------------"
-	     << endl;
-
-	cout << "|" << right << setw(3) << "NO" << setw(2) << "|" << left
-	     << setw(20) << "NAMA ANGGOTA" << setw(2) << "|" << right
-	     << setw(15) << "LAMA HARI PEMINJAMAN" << setw(2) << "|" << right
-	     << setw(15) << "DENDA (RP.)" << setw(2) << "|";
-	cout << endl;
-
 	// outputkan data
-	for (size_t i = 0; i < jumlah_peminjam; i++) {
-		cout << "------------------------------------------------------"
-		        "-------------"
-		     << endl;
-		cout << "|" << right << setw(3) << i + 1 << setw(2) << "|"
-		     << left << setw(20) << data_peminjam[i].nama << setw(2)
-		     << "|" << right << setw(20)
-		     << data_peminjam[i].lama_peminjaman << setw(2) << "|"
-		     << right << setw(15)
-		     << hitung_denda(data_peminjam[i].lama_peminjaman)
-		     << setw(2) << "|";
-		cout << endl;
-	}
-
-	cout << "--------------------------------------------------------------"
-	        "-----"
-	     << endl;
+	print_tabel(data_peminjam, jumlah_peminjam);
 
 	return 0;
+}
+
+void
+input_tabel(Peminjam data_peminjam[], int jumlah_peminjam)
+{
+	for (size_t i = 0; i < jumlah_peminjam; i++) {
+		string nama, hari;
+
+		cout << "\nNO: " << i + 1 << "\n";
+
+		cout << "Masukan Nama          : ";
+		cin >> data_peminjam->nama;
+
+		cout << "Masukan Hari Dipinjam : ";
+		cin >> data_peminjam->lama_peminjaman;
+	}
+}
+
+void
+print_tabel(Peminjam data_peminjam[], int jumlah_peminjam)
+{
+	// using lambda since it's relevant and used only in here
+	auto print_line = []() -> void { cout << string(70, '-') << "\n"; };
+
+	print_line();
+	print_data("NO", "NAMA ANGGOTA", "LAMA HARI PEMINJAMAN", "DENDA (RP.)");
+
+	for (size_t i = 0; i < jumlah_peminjam; i++) {
+		print_line();
+
+		string nama = data_peminjam[i].nama;
+		long long hari = data_peminjam[i].lama_peminjaman;
+		long long besar_denda = hitung_denda(hari);
+
+		print_data(i + 1, nama, hari, besar_denda);
+	}
+	print_line();
+}
+
+long long
+hitung_denda(long long hari_dipinjam)
+{
+	// denda dihitung dari per tempo yg di tentukan
+	// misalkan tempo nya 7 hari, maka jika buku dipinjam
+	// 13 hari, denda yg akan dikenakan adalah 13 hari dibagi 7,
+	// maka didapatkan 1 yg kemudian di kalikan dengan besar denda.
+	return (besar_denda * (hari_dipinjam) / tempo_denda);
+}
+
+void
+print_data(size_t no, string nama, long long hari, long long denda)
+{
+	cout << "|" << right << setw(3) << no << setw(2) << "|" << left
+	     << setw(20) << nama << setw(2) << "|" << right << setw(20) << hari
+	     << setw(2) << "|" << right << setw(15) << denda << setw(2) << "|";
+	cout << "\n";
+}
+
+void
+print_data(string no, string nama, string hari, string denda)
+{
+	cout << "|" << right << setw(3) << no << setw(2) << "|" << left
+	     << setw(20) << nama << setw(2) << "|" << right << setw(20) << hari
+	     << setw(2) << "|" << right << setw(15) << denda << setw(2) << "|";
+	cout << "\n";
 }
