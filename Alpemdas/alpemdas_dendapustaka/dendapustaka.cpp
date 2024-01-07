@@ -202,9 +202,7 @@ set_hari(string data[][2], size_t i)
 void
 validate_index(size_t index)
 {
-	if (index >= jumlah_peminjam) {
+	if (index >= jumlah_peminjam)
 		throw std::out_of_range("ERROR: attempted to access/modify an "
 		                        "out of bound index!\n");
-		exit(-1);
-	}
 };
