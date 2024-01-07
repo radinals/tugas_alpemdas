@@ -12,9 +12,7 @@ using namespace std;
 long long str2num(string str);
 long long hitung_denda(string hari_dipinjam);
 
-// using a template, too generic for overloading
-template <typename T_NO, typename T_NAMA, typename T_HARI, typename T_DENDA>
-void print_data(T_NO no, T_NAMA nama, T_HARI hari, T_DENDA denda);
+void print_data(string no, string nama, string hari, string denda);
 
 void print_tabel(string data_peminjam[][2]);
 void input_tabel(string data_peminjam[][2]);
@@ -64,22 +62,23 @@ void
 input_tabel(string data_peminjam[][2])
 {
 	for (size_t i = 0; i < jumlah_peminjam; i++) {
+		try {
+			validate_index(i);
+		} catch (std::out_of_range) {
+			break;
+		}
+
 		string nama, hari;
 
 		cout << "\nNO: " << i + 1 << "\n";
 
-		try {
-			cout << "Masukan Nama          : ";
-			set_nama(data_peminjam, i);
+		validate_index(i);
 
-			cout << "Masukan Hari Dipinjam : ";
-			set_hari(data_peminjam, i);
+		cout << "Masukan Nama          : ";
+		set_nama(data_peminjam, i);
 
-		} catch (std::out_of_range) { // should never go off
-			cout << "ERROR: tried to set data with an invalid "
-			        "index!\n";
-			exit(-1);
-		};
+		cout << "Masukan Hari Dipinjam : ";
+		set_hari(data_peminjam, i);
 	}
 }
 
@@ -96,33 +95,34 @@ print_tabel(string data_peminjam[][2])
 	};
 
 	print_line();
-	print_data<string, string, string, string>(
-	    "NO", "NAMA ANGGOTA", "LAMA HARI PEMINJAMAN", "DENDA (RP.)");
+	print_data("NO", "NAMA ANGGOTA", "LAMA HARI PEMINJAMAN", "DENDA (RP.)");
 
 	for (size_t i = 0; i < jumlah_peminjam; i++) {
+		try {
+			validate_index(i);
+		} catch (std::out_of_range) {
+			break;
+		}
+
 		print_line();
 
 		string hari, nama;
-		try {
-			hari = get_hari(data_peminjam, i);
-			nama = get_nama(data_peminjam, i);
-		} catch (std::out_of_range) { // should never go off
-			cout << "ERROR: tried access data with an invalid "
-			        "index!\n";
-			exit(-1);
-		}
+		hari = get_hari(data_peminjam, i);
+		nama = get_nama(data_peminjam, i);
+
+		if (nama.empty() || hari.empty())
+			continue;
 
 		long long besar_denda = hitung_denda(hari);
 
-		print_data<size_t, string, string, long long>(i + 1, nama, hari,
-		                                              besar_denda);
+		print_data(to_string(i + 1), nama, hari,
+		           to_string(besar_denda));
 	}
 	print_line();
 }
 
-template <typename T_NO, typename T_NAMA, typename T_HARI, typename T_DENDA>
 void
-print_data(T_NO no, T_NAMA nama, T_HARI hari, T_DENDA denda)
+print_data(string no, string nama, string hari, string denda)
 {
 	cout << "|" << right << setw(3) << no << setw(2) << "|" << left
 	     << setw(max_col_length) << nama << setw(2) << "|" << right
@@ -160,14 +160,12 @@ hitung_denda(string hari_dipinjam)
 string
 get_nama(string data[][2], size_t i)
 {
-	validate_index(i);
 	return data[i][0];
 }
 
 string
 get_hari(string data[][2], size_t i)
 {
-	validate_index(i);
 	string hari = data[i][1];
 
 	if (hari.length() > max_col_length)
@@ -179,7 +177,6 @@ get_hari(string data[][2], size_t i)
 void
 set_nama(string data[][2], size_t i)
 {
-	validate_index(i);
 
 	cin.clear();
 	cin.ignore();
@@ -199,13 +196,15 @@ set_nama(string data[][2], size_t i)
 void
 set_hari(string data[][2], size_t i)
 {
-	validate_index(i);
 	cin >> data[i][1];
 }
 
 void
 validate_index(size_t index)
 {
-	if (index >= jumlah_peminjam)
-		throw std::out_of_range("index out of bounds");
+	if (index >= jumlah_peminjam) {
+		throw std::out_of_range("ERROR: attempted to access/modify an "
+		                        "out of bound index!\n");
+		exit(-1);
+	}
 };
