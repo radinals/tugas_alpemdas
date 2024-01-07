@@ -73,6 +73,8 @@ void
 print_tabel(string data_peminjam[][2], int jumlah_peminjam)
 {
 	// using lambda since it's relevant and used only in here
+	// FIXME: the len should be determine by the longest line in the
+	//	  table
 	auto print_line = []() -> void { cout << string(70, '-') << "\n"; };
 
 	print_line();
