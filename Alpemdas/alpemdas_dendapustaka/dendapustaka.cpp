@@ -27,7 +27,8 @@ void set_hari(string data[][2], size_t i);
 const int besar_denda = 5000; // rupiah
 const int tempo_denda = 7;    // hari
 
-const size_t name_max_len = 20;
+// maximal panjang kolom
+const size_t max_col_length = 20;
 
 // jumlah data anggota yg akan disimpan
 int jumlah_peminjam = 0;
@@ -92,7 +93,11 @@ print_tabel(string data_peminjam[][2])
 	// using lambda since it's relevant and used only in here
 	// FIXME: the len should be determine by the longest line in the
 	//	  table
-	auto print_line = []() -> void { cout << string(67, '-') << "\n"; };
+	// total panjang kolom + jumlah_pemisah + jumlah buffer pemisah
+	auto print_line = []() -> void {
+		cout << string(((max_col_length * 3) + (3 + (5 * 2))), '-')
+		     << "\n";
+	};
 
 	print_line();
 	print_data<string, string, string, string>(
@@ -124,8 +129,9 @@ void
 print_data(T_NO no, T_NAMA nama, T_HARI hari, T_DENDA denda)
 {
 	cout << "|" << right << setw(3) << no << setw(2) << "|" << left
-	     << setw(20) << nama << setw(2) << "|" << right << setw(20) << hari
-	     << setw(2) << "|" << right << setw(15) << denda << setw(2) << "|";
+	     << setw(max_col_length) << nama << setw(2) << "|" << right
+	     << setw(max_col_length) << hari << setw(2) << "|" << right
+	     << setw(max_col_length) << denda << setw(2) << "|";
 	cout << "\n";
 }
 
@@ -166,6 +172,11 @@ string
 get_hari(string data[][2], size_t i)
 {
 	validate_index(i);
+	string hari = data[i][1];
+
+	if (hari.length() > max_col_length)
+		hari = hari.substr(0, max_col_length);
+
 	return data[i][1];
 }
 
@@ -181,8 +192,8 @@ set_nama(string data[][2], size_t i)
 	getline(cin, nama);
 
 	// truncate the name if longer than name_max_len
-	if (nama.length() > name_max_len) {
-		nama = nama.substr(0, name_max_len - 3);
+	if (nama.length() > max_col_length) {
+		nama = nama.substr(0, max_col_length - 3);
 		nama += "...";
 	}
 
