@@ -97,30 +97,6 @@ print_tabel(string data_peminjam[][2], int jumlah_peminjam)
 	print_line();
 }
 
-string
-get_nama(string data[][2], size_t i)
-{
-	return data[i][0];
-}
-
-string
-get_hari(string data[][2], size_t i)
-{
-	return data[i][1];
-}
-
-void
-set_nama(string data[][2], size_t i)
-{
-	cin >> data[i][0];
-}
-
-void
-set_hari(string data[][2], size_t i)
-{
-	cin >> data[i][1];
-}
-
 template <typename T_NO, typename T_NAMA, typename T_HARI, typename T_DENDA>
 void
 print_data(T_NO no, T_NAMA nama, T_HARI hari, T_DENDA denda)
@@ -155,4 +131,30 @@ hitung_denda(string hari_dipinjam)
 	// 13 hari, denda yg akan dikenakan adalah 13 hari dibagi 7,
 	// maka didapatkan 1 yg kemudian di kalikan dengan besar denda.
 	return besar_denda * (str2num(hari_dipinjam) / tempo_denda);
+}
+
+// TODO: to be more useful, these getter and setters should
+//	 error check first before "getting" or "setting" a value
+string
+get_nama(string data[][2], size_t i)
+{
+	return data[i][0];
+}
+
+string
+get_hari(string data[][2], size_t i)
+{
+	return data[i][1];
+}
+
+void
+set_nama(string data[][2], size_t i)
+{
+	cin >> data[i][0];
+}
+
+void
+set_hari(string data[][2], size_t i)
+{
+	cin >> data[i][1];
 }
