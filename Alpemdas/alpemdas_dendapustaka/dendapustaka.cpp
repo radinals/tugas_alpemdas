@@ -27,6 +27,8 @@ void set_hari(string data[][2], size_t i);
 const int besar_denda = 5000; // rupiah
 const int tempo_denda = 7;    // hari
 
+const size_t name_max_len = 20;
+
 // jumlah data anggota yg akan disimpan
 int jumlah_peminjam = 0;
 
@@ -90,7 +92,7 @@ print_tabel(string data_peminjam[][2])
 	// using lambda since it's relevant and used only in here
 	// FIXME: the len should be determine by the longest line in the
 	//	  table
-	auto print_line = []() -> void { cout << string(70, '-') << "\n"; };
+	auto print_line = []() -> void { cout << string(67, '-') << "\n"; };
 
 	print_line();
 	print_data<string, string, string, string>(
@@ -171,7 +173,20 @@ void
 set_nama(string data[][2], size_t i)
 {
 	validate_index(i);
-	cin >> data[i][0];
+
+	cin.clear();
+	cin.ignore();
+
+	string nama;
+	getline(cin, nama);
+
+	// truncate the name if longer than name_max_len
+	if (nama.length() > name_max_len) {
+		nama = nama.substr(0, name_max_len - 3);
+		nama += "...";
+	}
+
+	data[i][0] = nama;
 }
 
 void
