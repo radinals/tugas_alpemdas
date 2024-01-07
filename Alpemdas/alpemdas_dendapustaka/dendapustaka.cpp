@@ -6,12 +6,20 @@
 
 using namespace std;
 
+// FIXME: most of this is ugly, very ugly...
+
 long long str2num(string str);
 long long hitung_denda(string hari_dipinjam);
 void print_data(size_t no, string nama, string hari, long long denda);
 void print_data(string no, string nama, string hari, string denda);
+
+void print_tabel(string data_peminjam[][2], int jumlah_peminjam);
+void input_tabel(string data_peminjam[][2], int jumlah_peminjam);
+
 string get_nama(string data[][2], size_t i);
 string get_hari(string data[][2], size_t i);
+void set_nama(string data[][2], size_t i);
+void set_hari(string data[][2], size_t i);
 
 const int besar_denda = 5000; // rupiah
 const int tempo_denda = 7;    // hari
@@ -30,27 +38,46 @@ main()
 	if (cin.fail() || jumlah_peminjam <= 0)
 		return -1;
 
-	auto print_line = []() -> void { cout << string(70, '-') << "\n"; };
-
-	// 'kolom' hanya 2 karena jumlah data,
-	// dan denda akan di dapatkan secara dinamis
+	// hanya 2 kolom karena hanya akan digunakan
+	// untuk nama dan hari
 	string data_peminjam[jumlah_peminjam][2];
 
 	// inputkan data
-	for (size_t i = 0; i < jumlah_peminjam; i++) {
-		cout << "\n";
-		cout << "NO: " << i + 1 << "\n";
-		cout << "Masukan Nama          : ";
-		cin >> data_peminjam[i][0];
-		cout << "Masukan Hari Dipinjam : ";
-		cin >> data_peminjam[i][1];
-	}
+	input_tabel(data_peminjam, jumlah_peminjam);
 
-	// outputkan header
+	// outputkan header dan outputkan data
+	print_tabel(data_peminjam, jumlah_peminjam);
+
+	cin.get();
+
+	return 0;
+}
+
+void
+input_tabel(string data_peminjam[][2], int jumlah_peminjam)
+{
+	for (size_t i = 0; i < jumlah_peminjam; i++) {
+		string nama, hari;
+
+		cout << "\nNO: " << i + 1 << "\n";
+
+		cout << "Masukan Nama          : ";
+		set_nama(data_peminjam, i);
+
+		cout << "Masukan Hari Dipinjam : ";
+		set_hari(data_peminjam, i);
+	}
+}
+
+void
+print_tabel(string data_peminjam[][2], int jumlah_peminjam)
+{
+	// using lambda since it's relevant and used only in here
+	auto print_line = []() -> void { cout << string(70, '-') << "\n"; };
+
 	print_line();
 	print_data("NO", "NAMA ANGGOTA", "LAMA HARI PEMINJAMAN", "DENDA (RP.)");
 
-	// outputkan data
 	for (size_t i = 0; i < jumlah_peminjam; i++) {
 		print_line();
 
@@ -62,9 +89,6 @@ main()
 		print_data(i + 1, nama, hari, besar_denda);
 	}
 	print_line();
-
-	cin.get();
-	return 0;
 }
 
 string
@@ -79,6 +103,19 @@ get_hari(string data[][2], size_t i)
 	return data[i][1];
 }
 
+void
+set_nama(string data[][2], size_t i)
+{
+	cin >> data[i][0];
+}
+
+void
+set_hari(string data[][2], size_t i)
+{
+	cin >> data[i][1];
+}
+
+// TODO: use templates instead
 void
 print_data(size_t no, string nama, string hari, long long denda)
 {
