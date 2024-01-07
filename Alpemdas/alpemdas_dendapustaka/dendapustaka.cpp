@@ -10,8 +10,10 @@ using namespace std;
 
 long long str2num(string str);
 long long hitung_denda(string hari_dipinjam);
-void print_data(size_t no, string nama, string hari, long long denda);
-void print_data(string no, string nama, string hari, string denda);
+
+// using a template, too generic for overloading
+template <typename T_NO, typename T_NAMA, typename T_HARI, typename T_DENDA>
+void print_data(T_NO no, T_NAMA nama, T_HARI hari, T_DENDA denda);
 
 void print_tabel(string data_peminjam[][2], int jumlah_peminjam);
 void input_tabel(string data_peminjam[][2], int jumlah_peminjam);
@@ -78,7 +80,8 @@ print_tabel(string data_peminjam[][2], int jumlah_peminjam)
 	auto print_line = []() -> void { cout << string(70, '-') << "\n"; };
 
 	print_line();
-	print_data("NO", "NAMA ANGGOTA", "LAMA HARI PEMINJAMAN", "DENDA (RP.)");
+	print_data<string, string, string, string>(
+	    "NO", "NAMA ANGGOTA", "LAMA HARI PEMINJAMAN", "DENDA (RP.)");
 
 	for (size_t i = 0; i < jumlah_peminjam; i++) {
 		print_line();
@@ -88,7 +91,8 @@ print_tabel(string data_peminjam[][2], int jumlah_peminjam)
 
 		long long besar_denda = hitung_denda(hari);
 
-		print_data(i + 1, nama, hari, besar_denda);
+		print_data<size_t, string, string, long long>(i + 1, nama, hari,
+		                                              besar_denda);
 	}
 	print_line();
 }
@@ -117,9 +121,9 @@ set_hari(string data[][2], size_t i)
 	cin >> data[i][1];
 }
 
-// TODO: use templates instead
+template <typename T_NO, typename T_NAMA, typename T_HARI, typename T_DENDA>
 void
-print_data(size_t no, string nama, string hari, long long denda)
+print_data(T_NO no, T_NAMA nama, T_HARI hari, T_DENDA denda)
 {
 	cout << "|" << right << setw(3) << no << setw(2) << "|" << left
 	     << setw(20) << nama << setw(2) << "|" << right << setw(20) << hari
@@ -127,15 +131,7 @@ print_data(size_t no, string nama, string hari, long long denda)
 	cout << "\n";
 }
 
-void
-print_data(string no, string nama, string hari, string denda)
-{
-	cout << "|" << right << setw(3) << no << setw(2) << "|" << left
-	     << setw(20) << nama << setw(2) << "|" << right << setw(20) << hari
-	     << setw(2) << "|" << right << setw(15) << denda << setw(2) << "|";
-	cout << "\n";
-}
-
+// TODO:
 // menggunakan long long
 // karena ini merubah string ke angka,
 // besar angka tidak diketauhi.
