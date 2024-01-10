@@ -14,13 +14,23 @@ using std::uint16_t;
 
 #define ArrSize(array) (sizeof(array) / sizeof(array[0]))
 
-enum Mark { M_Empty, M_X, M_O };
+enum Mark {
+	M_Empty,
+	M_X,
+	M_O
+};
 
 // these value are used for the bit shifts
 enum Coord {
-	C_A1=2, C_A2=1, C_A3=0,
-	C_B1=5, C_B2=4, C_B3=3,
-	C_C1=8, C_C2=7, C_C3=6,
+	C_A1 = 2,
+	C_A2 = 1,
+	C_A3 = 0,
+	C_B1 = 5,
+	C_B2 = 4,
+	C_B3 = 3,
+	C_C1 = 8,
+	C_C2 = 7,
+	C_C3 = 6,
 };
 
 // which player is what
@@ -29,8 +39,8 @@ Mark Com_Mark = M_O;
 Mark Player_Mark = M_X;
 
 // the board size
-const size_t Grid_mx  = 3;
-const size_t Grid_my  = 3;
+const size_t Grid_mx = 3;
+const size_t Grid_my = 3;
 
 // bitmaps of the X's and O's
 uint16_t X_bitmask = 0b000000000;
@@ -38,14 +48,14 @@ uint16_t O_bitmask = 0b000000000;
 
 // win state masks
 const uint16_t WinStates[] = {
-	0b111000000, 0b000111000, 0b000000111,	// horizontal
-	0b100100100, 0b010010010, 0b001001001,	// vertical
-	0b100010001, 0b001010100		// diagonal
+    0b111000000, 0b000111000, 0b000000111, // horizontal
+    0b100100100, 0b010010010, 0b001001001, // vertical
+    0b100010001, 0b001010100               // diagonal
 };
 
 // bit manipulation functions
-void toggle_bit_at (uint16_t& bitmask, Coord coord);
-bool bit_on_at (uint16_t bitmask, Coord coord);
+void toggle_bit_at(uint16_t& bitmask, Coord coord);
+bool bit_on_at(uint16_t bitmask, Coord coord);
 Coord index2Coord(size_t x, size_t y);
 bool winstate_found(uint16_t bitmask);
 
@@ -71,8 +81,7 @@ main()
 void
 game_loop()
 {
-	while(true)
-	{
+	while (true) {
 		redraw();
 
 		std::cout << "TURN: PLAYER\n";
@@ -103,7 +112,6 @@ game_loop()
 
 		redraw();
 	}
-
 }
 
 void
@@ -111,9 +119,9 @@ com_turn()
 {
 	size_t x, y;
 	do {
-		x = rand_num(0, Grid_mx-1);
-		y = rand_num(0, Grid_my-1);
-	} while (! place_mark(Com_Mark, x, y));
+		x = rand_num(0, Grid_mx - 1);
+		y = rand_num(0, Grid_my - 1);
+	} while (!place_mark(Com_Mark, x, y));
 }
 
 void
@@ -122,21 +130,20 @@ player_turn()
 	size_t x, y;
 	char x_c, y_c;
 
-	while(true)
-	{
+	while (true) {
 		std::string coord_str;
 		std::cout << "Enter the Coordinates [A-B][1-3]: ";
 		std::cin >> coord_str;
 
-		if (coord_str.empty() || coord_str.length() < 2) continue;
+		if (coord_str.empty() || coord_str.length() < 2)
+			continue;
 
 		y_c = coord_str.at(0);
 		x_c = coord_str.at(1);
 
-		if ((y_c >= 'A' && y_c <= 'C') && (x_c >= '1' && x_c <= '3'))
-		{
+		if ((y_c >= 'A' && y_c <= 'C') && (x_c >= '1' && x_c <= '3')) {
 			y = (y_c - 'A');
-			x = (x_c - '0')-1;
+			x = (x_c - '0') - 1;
 
 			if (place_mark(Player_Mark, x, y))
 				break;
@@ -148,23 +155,25 @@ player_turn()
 
 // toggles the bit on/off at based of the shift amount
 void
-toggle_bit_at (uint16_t& bitmask, Coord coord)
+toggle_bit_at(uint16_t& bitmask, Coord coord)
 {
 	bitmask ^= (1u << coord);
 }
 
 // returns the on/off state of a bit at a shift amount
 bool
-bit_on_at (uint16_t bitmask, Coord coord)
+bit_on_at(uint16_t bitmask, Coord coord)
 {
 	return (bitmask & (1u << coord));
 }
 
 // check the bits of the WinStates are found to be on at the bitmask
 bool
-winstate_found(uint16_t bitmask) {
-	for(size_t i=0; i < ArrSize(WinStates); i++)
-		if ((bitmask & WinStates[i]) == WinStates[i]) return true;
+winstate_found(uint16_t bitmask)
+{
+	for (size_t i = 0; i < ArrSize(WinStates); i++)
+		if ((bitmask & WinStates[i]) == WinStates[i])
+			return true;
 	return false;
 }
 
@@ -178,7 +187,7 @@ game_is_draw()
 bool
 place_mark(Mark mark, size_t x, size_t y)
 {
-	Coord coord = index2Coord(x,y);
+	Coord coord = index2Coord(x, y);
 
 	if (bit_on_at(O_bitmask, coord) || bit_on_at(X_bitmask, coord))
 		return false;
@@ -205,12 +214,11 @@ void
 print_board()
 {
 	std::cout << "\n- - - - - - -\n";
-	for (size_t y = 0; y < Grid_my; y++)
-	{
+	for (size_t y = 0; y < Grid_my; y++) {
 		std::cout << "| ";
 		for (size_t x = 0; x < Grid_mx; x++) {
 
-			Coord coord = index2Coord(x,y);
+			Coord coord = index2Coord(x, y);
 
 			if (bit_on_at(X_bitmask, coord) == 1)
 				std::cout << 'X';
