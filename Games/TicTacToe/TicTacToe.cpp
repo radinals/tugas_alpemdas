@@ -5,14 +5,6 @@
  *     |_| |_|\___||_|\__,_|\___||_|\___/ \___|
  */
 
-#include <cstddef>
-#include <cstdlib>
-#include <ios>
-#include <iostream>
-#include <limits>
-#include <random>
-#include <time.h>
-
 // OPSI Random Number Generator (RNG)
 // PERINGATAN:
 // 	menggunakan srand() + rand()
@@ -21,6 +13,17 @@
 // comment ini jika ingin menggunakan
 // RNG yang C-Style (menggunakan srand() + rand())
 #define CPP_STYLE_RANDOM
+
+#include <cstdlib>
+#include <ios>
+#include <iostream>
+#include <limits>
+#include <random>
+
+#ifndef CPP_STYLE_RANDOM
+#include <cstddef>
+#include <time.h>
+#endif // !CPP_STYLE_RANDOM
 
 // gunakan "cls" untuk windows
 #define ClearScreen system("clear");
@@ -307,9 +310,7 @@ rand_int(int min, int max) // random number generator
 #ifdef CPP_STYLE_RANDOM
 	std::random_device dev;
 	std::mt19937 rng(dev());
-	std::uniform_int_distribution<std::mt19937::result_type> dist6(min,
-	                                                               max);
-
+	std::uniform_int_distribution<int> dist6(min, max);
 	return dist6(rng);
 #else
 	srand(time(NULL));
