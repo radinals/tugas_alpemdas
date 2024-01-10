@@ -21,17 +21,13 @@ enum Mark {
 };
 
 // these value are used for the bit shifts
+// clang-format off
 enum Coord {
-	C_A1 = 2,
-	C_A2 = 1,
-	C_A3 = 0,
-	C_B1 = 5,
-	C_B2 = 4,
-	C_B3 = 3,
-	C_C1 = 8,
-	C_C2 = 7,
-	C_C3 = 6,
+	C_A1 = 2, C_A2 = 1, C_A3 = 0,
+	C_B1 = 5, C_B2 = 4, C_B3 = 3,
+	C_C1 = 8, C_C2 = 7, C_C3 = 6,
 };
+// clang-format on
 
 // which player is what
 // TODO: should be assigned dinamicly
