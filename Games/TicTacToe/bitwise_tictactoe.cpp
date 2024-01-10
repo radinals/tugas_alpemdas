@@ -15,7 +15,6 @@ using std::uint16_t;
 #define ArrSize(array) (sizeof(array) / sizeof(array[0]))
 
 enum Mark {
-	M_Empty,
 	M_X,
 	M_O
 };
