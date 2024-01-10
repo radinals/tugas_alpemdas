@@ -82,7 +82,6 @@ game_loop()
 
 		std::cout << "TURN: PLAYER\n";
 		player_turn();
-
 		if (winstate_found(X_bitmask)) {
 			redraw();
 			std::cout << "PLAYER WON!\n";
@@ -92,7 +91,6 @@ game_loop()
 		redraw();
 
 		std::cout << "TURN: COM\n";
-
 		com_turn();
 		if (winstate_found(O_bitmask)) {
 			redraw();
@@ -105,8 +103,6 @@ game_loop()
 			std::cout << "GAME OVER: DRAW\n";
 			break;
 		}
-
-		redraw();
 	}
 }
 
