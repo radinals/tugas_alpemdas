@@ -318,9 +318,9 @@ rand_int(int min, int max) // random number generator
 #endif
 }
 
+// dapatkan nilai-nilai random untuk pemain komputer
 void
-rand_com_choice(
-    Mark marktype) // dapatkan nilai-nilai random untuk pemain komputer
+rand_com_choice(Mark marktype)
 {
 	int x = -1, y = -1;
 	while (true) {

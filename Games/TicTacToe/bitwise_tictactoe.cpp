@@ -51,7 +51,6 @@ const uint16_t WinStates[] = {
 // bit manipulation functions
 void toggle_bit_at(uint16_t& bitmask, Coord coord);
 bool bit_on_at(uint16_t bitmask, Coord coord);
-Coord index2Coord(size_t x, size_t y);
 bool winstate_found(uint16_t bitmask);
 
 // rng
@@ -65,6 +64,7 @@ bool place_mark(Mark mark, size_t x, size_t y);
 void com_turn();
 void player_turn();
 bool game_is_draw();
+Coord index2Coord(size_t x, size_t y);
 
 int
 main()
@@ -251,6 +251,7 @@ index2Coord(size_t x, size_t y)
 		exit(-1);
 	}
 }
+
 void
 redraw()
 {
