@@ -3,19 +3,6 @@
 
 // Converter encoding ascii -> SBCDIC dan SBCDIC -> ascii
 
-// Aturan:
-//  - index:
-//     'A' = 0001
-//     'R' = 1001
-//  - id:
-//      00 -> numeric -> 0 .. 9
-//      11 -> huruf   -> A .. I
-//      10 -> huruf   -> J .. R
-//      01 -> huruf   -> S .. Z
-//  - FORMAT
-//      id  index
-//      00   0001
-
 // ================================================================ datatypes
 
 typedef unsigned char SBCDIC_Char;
