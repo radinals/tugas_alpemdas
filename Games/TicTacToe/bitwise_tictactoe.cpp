@@ -10,14 +10,9 @@
 #include <iostream>
 #include <random>
 
+// ================================================================ Constants
+
 using std::uint16_t;
-
-#define ArrSize(array) (sizeof(array) / sizeof(array[0]))
-
-enum Mark {
-	M_X,
-	M_O
-};
 
 // these value are used for the bit shifts
 // clang-format off
@@ -26,27 +21,20 @@ enum Coord {
 	C_B1 = 5, C_B2 = 4, C_B3 = 3,
 	C_C1 = 8, C_C2 = 7, C_C3 = 6,
 };
-// clang-format on
+
+enum Mark { M_X, M_O };
 
 // which player is what
 // TODO: should be assigned dinamicly
-Mark Com_Mark = M_O;
-Mark Player_Mark = M_X;
+const Mark Com_Mark = M_O;
+const Mark Player_Mark = M_X;
 
 // the board size
 const size_t Grid_mx = 3;
 const size_t Grid_my = 3;
+// clang-format on
 
-// bitmaps of the X's and O's
-uint16_t X_bitmask = 0b000000000;
-uint16_t O_bitmask = 0b000000000;
-
-// win state masks
-const uint16_t WinStates[] = {
-    0b111000000, 0b000111000, 0b000000111, // horizontal
-    0b100100100, 0b010010010, 0b001001001, // vertical
-    0b100010001, 0b001010100               // diagonal
-};
+// =============================================================== Prototypes
 
 // bit manipulation functions
 void toggle_bit_at(uint16_t& bitmask, Coord coord);
@@ -65,6 +53,25 @@ void com_turn();
 void player_turn();
 bool game_is_draw();
 Coord index2Coord(size_t x, size_t y);
+
+// ==================================================================== Macro
+
+#define ArrSize(array) (sizeof(array) / sizeof(array[0]))
+
+// ================================================================== Globals
+
+// bitmaps of the X's and O's
+uint16_t X_bitmask = 0b000000000;
+uint16_t O_bitmask = 0b000000000;
+
+// win state masks
+const uint16_t WinStates[] = {
+    0b111000000, 0b000111000, 0b000000111, // horizontal
+    0b100100100, 0b010010010, 0b001001001, // vertical
+    0b100010001, 0b001010100               // diagonal
+};
+
+// ==========================================================================
 
 int
 main()
