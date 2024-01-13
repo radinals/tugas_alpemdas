@@ -16,17 +16,7 @@
 //      id  index
 //      00   0001
 
-const unsigned char NUM_SET = 0x00; // 00
-const unsigned char A_I_SET = 0x30; // 11
-const unsigned char J_R_SET = 0x20; // 10
-const unsigned char S_Z_SET = 0x10; // 01
-
-// mencari offset dari 'start' sebuah char
-#define char_index(char, start) char - start + 1;
-
-// kembalikan char + index
-// -1 karena offset +1
-#define index2char(start, index) start + index - 1;
+// ================================================================ datatypes
 
 typedef unsigned char SBCDIC_Char;
 
@@ -35,18 +25,33 @@ typedef struct {
 	size_t len;       // ukuran dari str
 } SBCDIC_Str;
 
+// =============================================================== prototypes
 SBCDIC_Str* alloc_sbcdic_str(size_t size);
 unsigned char* alloc_str(size_t size);
-
 void free_str(unsigned char* str);
 void free_sbcdic_str(SBCDIC_Str* str);
-
 unsigned char* decode(SBCDIC_Str* sbcdic_str);
 SBCDIC_Str* encode(unsigned char* str, size_t str_len);
-
 void ascii_2_sbcdic(unsigned char c, SBCDIC_Char* sbcdic_char);
 void sbcdic_2_ascii(SBCDIC_Char sbcdic_char, unsigned char* c);
 
+// ================================================================= konstant
+
+// id bit mask
+const unsigned char NUM_SET = 0x00; // 00
+const unsigned char A_I_SET = 0x30; // 11
+const unsigned char J_R_SET = 0x20; // 10
+const unsigned char S_Z_SET = 0x10; // 01
+
+// ==================================================================== macro
+
+// mencari index sebuah char dari index
+#define char_index(char, start) (char - start);
+
+// kembalikan char + index
+#define index2char(start, index) (start + index);
+
+// ================================================================ functions
 int
 main()
 {
