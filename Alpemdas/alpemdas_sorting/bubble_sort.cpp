@@ -15,7 +15,7 @@ main()
 	cout << "BEFORE: ";
 	print_array(arr, arr_size);
 
-	bubble_sort(arr, arr_size, true);
+	bubble_sort(arr, arr_size);
 
 	cout << "AFTER:  ";
 	print_array(arr, arr_size);
@@ -57,5 +57,5 @@ print_array(int array[], size_t array_size)
 		cout << array[i] << ", ";
 	}
 
-	cout << endl;
+	cout << "\n";
 }
