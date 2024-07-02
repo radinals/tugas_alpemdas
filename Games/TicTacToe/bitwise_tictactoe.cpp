@@ -7,19 +7,19 @@
 //
 
 #include <cstddef>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
-#include <random>
 
 // ================================================================ Constants
-
-using std::uint16_t;
 
 // these value are used for the bit shifts
 // clang-format off
 enum Coord {
-	C_A1 = 2, C_A2 = 1, C_A3 = 0,
-	C_B1 = 5, C_B2 = 4, C_B3 = 3,
-	C_C1 = 8, C_C2 = 7, C_C3 = 6,
+	C_A1 = 0, C_A2 = 1, C_A3 = 2,
+	C_B1 = 3, C_B2 = 4, C_B3 = 5,
+	C_C1 = 6, C_C2 = 7, C_C3 = 8,
 };
 
 enum Mark { M_X, M_O };
@@ -30,19 +30,18 @@ const Mark Com_Mark = M_O;
 const Mark Player_Mark = M_X;
 
 // the board size
-const size_t Grid_mx = 3;
-const size_t Grid_my = 3;
+const size_t GRID_SIZE = 3;
 // clang-format on
 
 // =============================================================== Prototypes
 
 // bit manipulation functions
-void toggle_bit_at(uint16_t& bitmask, Coord coord);
-bool bit_on_at(uint16_t bitmask, Coord coord);
-bool winstate_found(uint16_t bitmask);
+void toggle_bit_at(unsigned int& bitmask, unsigned int coord);
+bool bit_on_at(unsigned int bitmask, unsigned int coord);
+bool winstate_found(unsigned int bitmask);
 
 // rng
-size_t rand_num(size_t min, size_t max);
+int rand_num(int min, int max);
 
 // game
 void game_loop();
@@ -52,23 +51,23 @@ bool place_mark(Mark mark, size_t x, size_t y);
 void com_turn();
 void player_turn();
 bool game_is_draw();
-Coord index2Coord(size_t x, size_t y);
 
 // ==================================================================== Macro
 
-#define ArrSize(array) (sizeof(array) / sizeof(array[0]))
+#define ArrSize(array) (sizeof((array)) / sizeof((array[0])))
+#define COORD(x, y)    ((y) + ((y) * 2) + (x))
 
 // ================================================================== Globals
 
 // bitmaps of the X's and O's
-uint16_t X_bitmask = 0b000000000;
-uint16_t O_bitmask = 0b000000000;
+unsigned int X_bitmask = 0b0000000000u;
+unsigned int O_bitmask = 0b0000000000u;
 
 // win state masks
-const uint16_t WinStates[] = {
-    0b111000000, 0b000111000, 0b000000111, // horizontal
-    0b100100100, 0b010010010, 0b001001001, // vertical
-    0b100010001, 0b001010100               // diagonal
+const unsigned int WinStates[] = {
+    0b111000000u, 0b000111000u, 0b000000111u, // horizontal
+    0b100100100u, 0b010010010u, 0b001001001u, // vertical
+    0b100010001u, 0b001010100u                // diagonal
 };
 
 // ================================================================ Functions
@@ -93,6 +92,11 @@ game_loop()
 			std::cout << "PLAYER WON!\n";
 			break;
 		}
+		if (game_is_draw()) {
+			redraw();
+			std::cout << "GAME OVER: DRAW\n";
+			break;
+		}
 
 		redraw();
 
@@ -103,7 +107,6 @@ game_loop()
 			std::cout << "COM WON!\n";
 			break;
 		}
-
 		if (game_is_draw()) {
 			redraw();
 			std::cout << "GAME OVER: DRAW\n";
@@ -116,9 +119,15 @@ void
 com_turn()
 {
 	size_t x, y;
+	srand((unsigned int)(time(NULL)));
 	do {
-		x = rand_num(0, Grid_mx - 1);
-		y = rand_num(0, Grid_my - 1);
+		x = rand_num(0, GRID_SIZE - 1);
+		y = rand_num(0, GRID_SIZE - 1);
+		std::cout << "x: " << x << " "
+		          << "y: " << y << '\n';
+		printf("X: %x\n", X_bitmask);
+		printf("O: %x\n", O_bitmask);
+		printf("B: %x\n", X_bitmask & O_bitmask);
 	} while (!place_mark(Com_Mark, x, y));
 }
 
@@ -153,21 +162,21 @@ player_turn()
 
 // toggles the bit on/off at based of the shift amount
 void
-toggle_bit_at(uint16_t& bitmask, Coord coord)
+toggle_bit_at(unsigned int& bitmask, unsigned int coord)
 {
 	bitmask ^= (1u << coord);
 }
 
 // returns the on/off state of a bit at a shift amount
 bool
-bit_on_at(uint16_t bitmask, Coord coord)
+bit_on_at(unsigned int bitmask, unsigned int coord)
 {
 	return (bitmask & (1u << coord));
 }
 
 // check the bits of the WinStates are found to be on at the bitmask
 bool
-winstate_found(uint16_t bitmask)
+winstate_found(unsigned int bitmask)
 {
 	for (size_t i = 0; i < ArrSize(WinStates); i++)
 		if ((bitmask & WinStates[i]) == WinStates[i])
@@ -179,83 +188,49 @@ winstate_found(uint16_t bitmask)
 bool
 game_is_draw()
 {
-	return (X_bitmask | O_bitmask) == 0b111111111;
+	return ((X_bitmask | O_bitmask) ^ 0b111111111u) == 0;
 }
 
 bool
 place_mark(Mark mark, size_t x, size_t y)
 {
-	Coord coord = index2Coord(x, y);
+	unsigned int coord = COORD(x, y);
 
 	if (bit_on_at(O_bitmask, coord) || bit_on_at(X_bitmask, coord))
 		return false;
-	if (mark == M_O) {
+	switch (mark) {
+	case M_O:
 		toggle_bit_at(O_bitmask, coord);
 		return true;
-	} else if (mark == M_X) {
+	case M_X:
 		toggle_bit_at(X_bitmask, coord);
 		return true;
 	}
 	return false;
 }
 
-size_t
-rand_num(size_t min, size_t max)
+int
+rand_num(int min, int max)
 {
-	std::random_device dev;
-	std::mt19937 rng(dev());
-	std::uniform_int_distribution<size_t> dist6(min, max);
-	return dist6(rng);
+	return min + rand() % (max - min + 1);
 }
 
 void
 print_board()
 {
 	std::cout << "\n- - - - - - -\n";
-	for (size_t y = 0; y < Grid_my; y++) {
+	for (size_t y = 0; y < GRID_SIZE; y++) {
 		std::cout << "| ";
-		for (size_t x = 0; x < Grid_mx; x++) {
+		for (size_t x = 0; x < GRID_SIZE; x++) {
 
-			Coord coord = index2Coord(x, y);
+			unsigned int coord = COORD(x, y);
 
-			if (bit_on_at(X_bitmask, coord) == 1)
-				std::cout << 'X';
-			else if (bit_on_at(O_bitmask, coord) == 1)
-				std::cout << 'O';
-			else
-				std::cout << ' ';
-			std::cout << " | ";
+			std::cout << (bit_on_at(X_bitmask, coord)   ? 'X'
+			              : bit_on_at(O_bitmask, coord) ? 'O'
+			                                            : ' ')
+			          << " | ";
 		}
 		std::cout << "\n- - - - - - -\n";
-	}
-}
-
-Coord
-index2Coord(size_t x, size_t y)
-{
-	if (x == 0 && y == 0)
-		return C_A1;
-	else if (x == 1 && y == 0)
-		return C_A2;
-	else if (x == 2 && y == 0)
-		return C_A3;
-
-	else if (x == 0 && y == 1)
-		return C_B1;
-	else if (x == 1 && y == 1)
-		return C_B2;
-	else if (x == 2 && y == 1)
-		return C_B3;
-
-	else if (x == 0 && y == 2)
-		return C_C1;
-	else if (x == 1 && y == 2)
-		return C_C2;
-	else if (x == 2 && y == 2)
-		return C_C3;
-	else {
-		std::cout << "Error!failed to convert index to coord.";
-		exit(-1);
 	}
 }
 
