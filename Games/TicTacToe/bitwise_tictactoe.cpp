@@ -16,11 +16,7 @@
 
 // these value are used for the bit shifts
 // clang-format off
-enum Coord {
-	C_A1 = 0, C_A2 = 1, C_A3 = 2,
-	C_B1 = 3, C_B2 = 4, C_B3 = 5,
-	C_C1 = 6, C_C2 = 7, C_C3 = 8,
-};
+enum Coord { C_A1, C_A2, C_A3, C_B1, C_B2, C_B3, C_C1, C_C2, C_C3, };
 
 enum Mark { M_X, M_O };
 
@@ -36,21 +32,21 @@ const size_t GRID_SIZE = 3;
 // =============================================================== Prototypes
 
 // bit manipulation functions
-void toggle_bit_at(unsigned int& bitmask, unsigned int coord);
-bool bit_on_at(unsigned int bitmask, unsigned int coord);
-bool winstate_found(unsigned int bitmask);
+static void toggle_bit_at(unsigned int& bitmask, unsigned int coord);
+static bool bit_on_at(unsigned int bitmask, unsigned int coord);
+static bool winstate_found(unsigned int bitmask);
 
 // rng
-int rand_num(int min, int max);
+static int rand_num(int min, int max);
 
 // game
-void game_loop();
-void print_board();
-void redraw();
-bool place_mark(Mark mark, size_t x, size_t y);
-void com_turn();
-void player_turn();
-bool game_is_draw();
+static void game_loop();
+static void print_board();
+static void redraw();
+static bool place_mark(Mark mark, size_t x, size_t y);
+static void com_turn();
+static void player_turn();
+static bool game_is_draw();
 
 // ==================================================================== Macro
 
@@ -60,8 +56,8 @@ bool game_is_draw();
 // ================================================================== Globals
 
 // bitmaps of the X's and O's
-unsigned int X_bitmask = 0b0000000000u;
-unsigned int O_bitmask = 0b0000000000u;
+static unsigned int X_bitmask = 0b0000000000u;
+static unsigned int O_bitmask = 0b0000000000u;
 
 // win state masks
 const unsigned int WinStates[] = {
@@ -123,11 +119,6 @@ com_turn()
 	do {
 		x = rand_num(0, GRID_SIZE - 1);
 		y = rand_num(0, GRID_SIZE - 1);
-		std::cout << "x: " << x << " "
-		          << "y: " << y << '\n';
-		printf("X: %x\n", X_bitmask);
-		printf("O: %x\n", O_bitmask);
-		printf("B: %x\n", X_bitmask & O_bitmask);
 	} while (!place_mark(Com_Mark, x, y));
 }
 
